@@ -13,6 +13,7 @@ class Vehicle:
         self.weight = weight
         self.eta = eta
         self.id_list.add(self.id)
+        self.coor = coor
     
     def __str__(self) -> str:
         return f"{self.id}"
@@ -28,13 +29,16 @@ class Ship:
         self.ship_matrix = np.full((w, l), 0, dtype=object)
     
     def is_coor_filled(self, x_coor, y_coor) -> bool:
+        if x_coor >= self.w or x_coor < 0:
+            return True
+        if y_coor >= self.l or y_coor < 0:
+            return True
         if self.ship_matrix[x_coor, y_coor] != 0:
             return True
         return False
     
     def is_space_filled(self, w, l, start_x_coor, start_y_coor):
-        start_x_coor -= 1
-        start_y_coor -= 1
+       
 
         for x_coor in range(w):
             for y_coor in range(l):
@@ -55,8 +59,7 @@ class Ship:
         return sum_shipping_fee
     
     def inputing_ship(self, vehicle: "Vehicle", start_x_coor, start_y_coor) -> str:
-        start_x_coor -= 1
-        start_y_coor -= 1
+       
        
         true_w = vehicle.w if vehicle.orientation == "vertical" else vehicle.l
         true_l = vehicle.l if vehicle.orientation == "vertical" else vehicle.w
@@ -77,12 +80,12 @@ class Ship:
 ship1 = Ship(w=10, l=20, max_capacity=10)
 vehicle1 = Vehicle(id="f", w=3, l=2, orientation="horizontal", shipping_fee=20, weight=10, eta=10)
 vehicle2 = Vehicle(id="c", w=3, l=2, orientation="vertical", shipping_fee=20, weight=10, eta=10)
-vehicle3 = Vehicle(id="f", w=3, l=2, orientation="horizontal", shipping_fee=20, weight=10, eta=10)
+vehicle3 = Vehicle(id="d", w=3, l=2, orientation="horizontal", shipping_fee=20, weight=10, eta=10)
 
 
 
 
-print(ship1.inputing_ship(vehicle1, 1, 1))
+print(ship1.inputing_ship(vehicle1, 1, 18))
 print(ship1.inputing_ship(vehicle2, 4, 1))
 print(ship1.calculate_shipping_fee())
 
