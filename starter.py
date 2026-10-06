@@ -1,3 +1,5 @@
+import random
+import string
 import numpy as np
 
 class Vehicle:
@@ -75,22 +77,83 @@ class Ship:
         return "sukses"
     
     def display(self):
-        print(self.ship_matrix)
+        for row in self.ship_matrix:
+            print(" ".join(str(cell) for cell in row))
 
-ship1 = Ship(w=10, l=20, max_capacity=10)
-vehicle1 = Vehicle(id="f", w=3, l=2, orientation="horizontal", shipping_fee=20, weight=10, eta=10)
-vehicle2 = Vehicle(id="c", w=3, l=2, orientation="vertical", shipping_fee=20, weight=10, eta=10)
-vehicle3 = Vehicle(id="d", w=3, l=2, orientation="horizontal", shipping_fee=20, weight=10, eta=10)
+def randomize_initial_state(ship: "Ship", vehicles: list, max_attempts: int = 100, seed=None):
+    """
+    State awal hill climbing: tiap vehicle dicoba ditaruh di posisi & orientasi acak.
+    Urutan vehicle diacak, tiap vehicle dicoba max_attempts kali sampai muat
+    (inputing_ship sudah menolak overlap / keluar batas).
+    Return (placed, unplaced).
+    """
+    rng = random.Random(seed)
+    order = list(vehicles)
+    rng.shuffle(order)
 
+    placed, unplaced = [], []
+    for vehicle in order:
+        success = False
+        for _ in range(max_attempts):
+            vehicle.orientation = rng.choice(["vertical", "horizontal"])
+            start_x = rng.randrange(ship.w)
+            start_y = rng.randrange(ship.l)
+            if ship.inputing_ship(vehicle, start_x, start_y) == "sukses":
+                success = True
+                break
+        if success:
+            placed.append(vehicle)
+        else:
+            vehicle.coor = [-1, -1]
+            unplaced.append(vehicle)
+    return placed, unplaced
 
+def place_vehicle_anywhere(ship: "Ship", vehicle: "Vehicle") -> bool:
+    """Scan seluruh posisi & kedua orientasi, taruh di tempat pertama yang muat."""
+    original = vehicle.orientation
+    for orientation in ("vertical", "horizontal"):
+        vehicle.orientation = orientation
+        for x in range(ship.w):
+            for y in range(ship.l):
+                if ship.inputing_ship(vehicle, x, y) == "sukses":
+                    return True
+    vehicle.orientation = original
+    return False
 
+def fill_ship_until_full(ship: "Ship", vehicles: list):
+    """
+    Masukkan kendaraan satu per satu sampai kapal penuh, yaitu tidak ada lagi
+    kendaraan tersisa yang muat. Vehicle yang tidak muat dilewati (bisa saja
+    vehicle berikutnya yang lebih kecil masih muat).
+    Return (placed, unplaced).
+    """
+    placed, unplaced = [], []
+    for vehicle in vehicles:
+        if place_vehicle_anywhere(ship, vehicle):
+            placed.append(vehicle)
+        else:
+            unplaced.append(vehicle)
+    return placed, unplaced
 
-print(ship1.inputing_ship(vehicle1, 1, 18))
-print(ship1.inputing_ship(vehicle2, 4, 1))
-print(ship1.calculate_shipping_fee())
+if __name__ == "__main__":
+    ship1 = Ship(w=10, l=20, max_capacity=10)
 
-ship1.display()
-print(vehicle1.coor)
+    vehicles = [
+        Vehicle(id=string.ascii_letters[i], w=random.randint(1, 3), l=random.randint(2, 4),
+                orientation="vertical", shipping_fee=random.randint(10, 50),
+                weight=random.randint(5, 20), eta=random.randint(1, 10))
+        for i in range(26)
+    ]
 
-# matriks mash bisa overlapp kalo lebih harusnya gagal input
-# coordinat sistemnya masih array meaning x = vertikal y = horizontal
+    # state awal acak untuk hill climbing
+    placed, unplaced = randomize_initial_state(ship1, vehicles, seed=42)
+
+    ship1.display()
+    print(f"placed: {len(placed)}, unplaced: {len(unplaced)}")
+    print(f"total shipping fee: {ship1.calculate_shipping_fee()}")
+
+    # alternatif: isi kapal sampai penuh (deterministik)
+    # ship2 = Ship(w=10, l=20, max_capacity=10)
+    # placed, unplaced = fill_ship_until_full(ship2, vehicles)
+
+# catatan: koordinat masih array, x = vertikal (baris), y = horizontal (kolom)
