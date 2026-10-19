@@ -111,6 +111,61 @@ class Ship:
                 unplaced_vehicles.remove(selected_vehicle)
                 attempts = 0 
 
+    def remove_vehicle_success(self, vehicle: Vehicle) -> bool:
+        if vehicle not in self.list_vehicles_in_ship or vehicle.coor == [-1, -1]:
+            return False
+        true_w = vehicle.w if vehicle.orientation == "vertical" else vehicle.l
+        true_l = vehicle.l if vehicle.orientation == "vertical" else vehicle.w
+        
+       
+            
+        for x_coor in range(true_w):
+            for y_coor in range(true_l):
+                self.ship_matrix[vehicle.coor[0] + x_coor, vehicle.coor[1] + y_coor] = 0
+        
+        vehicle.coor = [-1, -1]
+        self.list_vehicles_in_ship.discard(vehicle)
+        return True
+        
+
+    def change_orientation_success(self, vehicle: Vehicle):
+        if vehicle not in self.list_vehicles_in_ship or vehicle.coor == [-1, -1]:
+            return False
+        
+        original_orientation = vehicle.orientation
+        x_coor = vehicle.coor[0]
+        y_coor = vehicle.coor[1]
+        vehicle.orientation = "vertical" if vehicle.orientation == "horizontal" else "horizontal"
+
+        self.remove_vehicle_success(vehicle)
+        if self.inputing_vehicle_success(vehicle, x_coor, y_coor):
+            return True
+        
+        vehicle.orientation = original_orientation
+        self.inputing_vehicle_success(vehicle, x_coor, y_coor)
+        return False
+    
+    def move_vehicle_success(self, vehicle: Vehicle) -> bool:
+
+        if vehicle not in self.list_vehicles_in_ship or vehicle.coor == [-1, -1]:
+            return False
+
+        old_x, old_y = vehicle.coor
+
+        new_coor_x = np.random.randint(0, self.w)
+        new_coor_y = np.random.randint(0, self.l)
+
+        self.remove_vehicle(vehicle)
+
+        if self.inputing_vehicle_success(vehicle, new_coor_x, new_coor_y):
+            return True
+       
+        self.inputing_vehicle_success(vehicle, old_x, old_y)
+        return False
+
+        
+
+
     def display(self):
         for row in self.ship_matrix:
             row_str = ""
@@ -121,6 +176,7 @@ class Ship:
                    
                     row_str += f"\033[92m{cell.id}\033[0m "
             print(f"[{row_str.strip()}]")
+
 
 class Armada:
     def __init__(self, ship_list: set):
@@ -136,6 +192,10 @@ class Armada:
     def random_state_armada(Self, list_vehicles: set[Vehicle]):
         for ship in ship_list:
             ship.random_state_ship(list_vehicles)
+
+    
+    
+
 
 
 
