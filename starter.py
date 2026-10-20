@@ -2,10 +2,7 @@ import numpy as np
 import random
 
 class Vehicle:
-    id_list = set()
-    def __init__(self, id: str, w: int, l: int, shipping_fee: float, weight: int, eta: int, coor=[-1,-1], orientation = "vertical"):
-        if id in self.id_list:
-            raise ValueError("udah ada id nya, ganti")
+    def __init__(self, id: str, w: int, l: int, shipping_fee: float, weight: int, eta: int, coor=None, orientation="vertical"):
         self.id = id
         self.w = w
         self.l = l
@@ -13,26 +10,36 @@ class Vehicle:
         self.shipping_fee = shipping_fee
         self.weight = weight
         self.eta = eta
-        self.id_list.add(self.id)
-        self.coor = coor
+        if coor is None:
+            self.coor = [-1, -1]
+        else:
+            self.coor = [coor[0], coor[1]]
     
     def __str__(self) -> str:
         return f"{self.id}"
 
     def __repr__(self) -> str:
-       
         return f"{self.id}"
-    
+
 
 class Ship:
-    def __init__(self, w: int, l: int, max_capacity: int, id: str, list_vehicles_in_ship = set()):
+    def __init__(self, w: int, l: int, max_capacity: int, id: str, list_vehicles_in_ship=None):
         self.w = w
         self.l = l
         self.max_capacity = max_capacity
         self.ship_matrix = np.full((w, l), 0, dtype=object)
         self.id = id
-        self.list_vehicles_in_ship = set()
+        if list_vehicles_in_ship is None:
+            self.list_vehicles_in_ship = set()
+        else:
+            self.list_vehicles_in_ship = set(list_vehicles_in_ship)
     
+    def __str__(self) -> str:
+        return f"Ship(id='{self.id}')"
+
+    def __repr__(self) -> str:
+        return f"Ship(id='{self.id}')"
+
     def is_coor_filled(self, x_coor, y_coor) -> bool:
         if x_coor >= self.w or x_coor < 0:
             return True
@@ -43,8 +50,6 @@ class Ship:
         return False
     
     def is_space_filled(self, w, l, start_x_coor, start_y_coor):
-       
-
         for x_coor in range(w):
             for y_coor in range(l):
                 if self.is_coor_filled(start_x_coor + x_coor, start_y_coor + y_coor): 
@@ -55,7 +60,6 @@ class Ship:
         sum_shipping_fee = 0
         for vehicle in self.list_vehicles_in_ship:
             sum_shipping_fee += vehicle.shipping_fee
-
         return sum_shipping_fee
     
     def calculate_ship_weight(self):
@@ -64,16 +68,10 @@ class Ship:
             sum_ship_weight += vehicle.weight
         return sum_ship_weight
     
-    
     def is_ship_full(self, vehicle: Vehicle) -> bool:
-        
         return self.calculate_ship_weight() + vehicle.weight > self.max_capacity
     
-    
-    
     def inputing_vehicle_success(self, vehicle: Vehicle, start_x_coor, start_y_coor) -> bool:
-       
-       
         true_w = vehicle.w if vehicle.orientation == "vertical" else vehicle.l
         true_l = vehicle.l if vehicle.orientation == "vertical" else vehicle.w
         
@@ -89,7 +87,7 @@ class Ship:
         return True
     
     def random_state_ship(self, vehicles: list[Vehicle]):
-        unplaced_vehicles = vehicles
+        unplaced_vehicles = list(vehicles)
         
         attempts = 0
         max_attempts = 100
@@ -97,7 +95,6 @@ class Ship:
         
         while len(unplaced_vehicles) != 0 and attempts < max_attempts:
             attempts += 1
-            
             
             selected_vehicle = random.choice(unplaced_vehicles)
             orientation_of_vehicle = random.choice(options)
@@ -107,20 +104,16 @@ class Ship:
             random_x = random.randrange(0, self.w)
             random_y = random.randrange(0, self.l)
         
-            
             if self.inputing_vehicle_success(selected_vehicle, random_x, random_y):
                 unplaced_vehicles.remove(selected_vehicle)
                 attempts = 0 
         return unplaced_vehicles
-        
 
     def remove_vehicle_success(self, vehicle: Vehicle) -> bool:
         if vehicle not in self.list_vehicles_in_ship or vehicle.coor == [-1, -1]:
             return False
         true_w = vehicle.w if vehicle.orientation == "vertical" else vehicle.l
         true_l = vehicle.l if vehicle.orientation == "vertical" else vehicle.w
-        
-       
             
         for x_coor in range(true_w):
             for y_coor in range(true_l):
@@ -129,9 +122,8 @@ class Ship:
         vehicle.coor = [-1, -1]
         self.list_vehicles_in_ship.discard(vehicle)
         return True
-        
 
-    def change_orientation_success(self, vehicle: Vehicle):
+    def change_orientation_success(self, vehicle: Vehicle) -> bool:
         if vehicle not in self.list_vehicles_in_ship or vehicle.coor == [-1, -1]:
             return False
         
@@ -154,8 +146,8 @@ class Ship:
 
         old_x, old_y = vehicle.coor
 
-        new_coor_x = np.random.randint(0, self.w)
-        new_coor_y = np.random.randint(0, self.l)
+        new_coor_x = random.randrange(0, self.w)
+        new_coor_y = random.randrange(0, self.l)
 
         self.remove_vehicle_success(vehicle)
 
@@ -165,8 +157,36 @@ class Ship:
         self.inputing_vehicle_success(vehicle, old_x, old_y)
         return False
 
-
-
+    def switch_vehicles_success(self, vehicle_a: Vehicle, vehicle_b: Vehicle) -> bool:
+        in_a = vehicle_a in self.list_vehicles_in_ship
+        in_b = vehicle_b in self.list_vehicles_in_ship
+        
+        if not in_a and not in_b:
+            return False
+        
+        coor_a = list(vehicle_a.coor)
+        coor_b = list(vehicle_b.coor)
+        
+        if in_a:
+            self.remove_vehicle_success(vehicle_a)
+        if in_b:
+            self.remove_vehicle_success(vehicle_b)
+            
+        ok_a = (not in_b) or self.inputing_vehicle_success(vehicle_a, *coor_b)
+        ok_b = ok_a and ((not in_a) or self.inputing_vehicle_success(vehicle_b, *coor_a))
+        
+        if ok_a and ok_b:
+            return True
+            
+        if in_b:
+            self.remove_vehicle_success(vehicle_a)
+        if in_a:
+            self.remove_vehicle_success(vehicle_b)
+        if in_a:
+            self.inputing_vehicle_success(vehicle_a, *coor_a)
+        if in_b:
+            self.inputing_vehicle_success(vehicle_b, *coor_b)
+        return False
 
     def display(self):
         for row in self.ship_matrix:
@@ -175,7 +195,6 @@ class Ship:
                 if cell == 0:
                     row_str += "0 "
                 else:
-                   
                     row_str += f"\033[92m{cell.id}\033[0m "
             print(f"[{row_str.strip()}]")
 
@@ -189,58 +208,54 @@ class Armada:
         sum_shipping_fee = 0
         for ship in self.ship_list:
             sum_shipping_fee += ship.calculate_shipping_fee()
-
         return sum_shipping_fee
     
-    def random_state_armada(self, list_vehicles: set[Vehicle]):
+    def random_state_armada(self, list_vehicles: list[Vehicle]):
+        unplaced = list(list_vehicles)
         for ship in self.ship_list:
-            ship.random_state_ship(list_vehicles)
-        
+            unplaced = ship.random_state_ship(unplaced)
+        return unplaced
 
-    def switch_vehicle_succes(self) -> bool:
-        #cek armada punya ship lebih dari 2
-        if len(self.ship_list) < 2:
+    def switch_vehicle_success(self) -> bool:
+        if len(self.ship_list) == 0:
             return False
-        vehicle_a, vehicle_b = np.random.choice(self.list_all_vehicles,2, replace=False)
+        vehicle_a, vehicle_b = random.sample(self.list_all_vehicles, 2)
         ship_a = None
         ship_b = None
         for s in self.ship_list:
             if vehicle_a in s.list_vehicles_in_ship:
                 ship_a = s
                 break
-        for v in self.ship_list:
-            if vehicle_b in v.list_vehicles_in_ship:
-                ship_b = v
+        for s in self.ship_list:
+            if vehicle_b in s.list_vehicles_in_ship:
+                ship_b = s
                 break
         if ship_a is None and ship_b is None:
             return False
+        
         coor_a = list(vehicle_a.coor) 
         coor_b = list(vehicle_b.coor)
+        
         # lepas dari kapal (kalau memang di kapal)
         if ship_a:
             ship_a.remove_vehicle_success(vehicle_a)
         if ship_b:
             ship_b.remove_vehicle_success(vehicle_b)
 
-
-        ok_a = ship_b is None or ship_b.inputing_vehicle_success(vehicle_a, *coor_b)
-        ok_b = ok_a and (ship_a is None or ship_a.inputing_vehicle_success(vehicle_b, *coor_a))
+        ok_a = (ship_b is None) or ship_b.inputing_vehicle_success(vehicle_a, *coor_b)
+        ok_b = ok_a and ((ship_a is None) or ship_a.inputing_vehicle_success(vehicle_b, *coor_a))
         if ok_a and ok_b:
-            if ship_a:
-                print("kendaraan 1: ", vehicle_a, "dari: ship a",ship_a)
-            else:
-                print("kendaraan 1: ", vehicle_a, "dari: luar")
-            if ship_b:
-                print("kendaraan 1: ", vehicle_b, "dari: ship b ",ship_b)
-            else:
-                print("kendaraan 1: ", vehicle_b, "dari: luar")
-
+            origin_a = f"ship {ship_a.id}" if ship_a else "luar"
+            origin_b = f"ship {ship_b.id}" if ship_b else "luar"
+            print(f"kendaraan 1: {vehicle_a} dari: {origin_a}")
+            print(f"kendaraan 2: {vehicle_b} dari: {origin_b}")
             return True
 
-
-              # gagal -> rollback
+        # gagal -> rollback
         if ship_b:
             ship_b.remove_vehicle_success(vehicle_a)
+        if ship_a:
+            ship_a.remove_vehicle_success(vehicle_b)
         if ship_a:
             ship_a.inputing_vehicle_success(vehicle_a, *coor_a)
         if ship_b:
@@ -248,19 +263,9 @@ class Armada:
         return False
     
 
-    
-    
 
-
-
-
-
-    
-    
-    
-
-ship1 = Ship(w=10, l=20, max_capacity=200, id = "f")
-ship2 = Ship(w=10, l=20, max_capacity=200, id = "d")
+ship1 = Ship(w=10, l=20, max_capacity=200, id="f")
+ship2 = Ship(w=10, l=20, max_capacity=200, id="d")
 
 list_vehicles = [
     Vehicle(id="a", w=3, l=2, orientation="horizontal", shipping_fee=5, weight=10, eta=10),
@@ -301,37 +306,36 @@ list_vehicles = [
 ]
 
 all_vehicles = list(list_vehicles)
-unplaced_vehicle = list_vehicles
-unplaced_vehicle = ship1.random_state_ship(unplaced_vehicle)
-print(unplaced_vehicle)
-unplaced_vehicle = ship2.random_state_ship(unplaced_vehicle)
-print(unplaced_vehicle)
+unplaced_after_ship1 = ship1.random_state_ship(all_vehicles)
+unplaced_after_ship2 = ship2.random_state_ship(unplaced_after_ship1)
 
-ship_list = set()
-ship_list.add(ship1)
-ship_list.add(ship2)
+ship_list = {ship1, ship2}
 
+print("=== SHIP 1 ===")
 ship1.display()
-print(ship1.calculate_shipping_fee())
+print("Shipping Fee:", ship1.calculate_shipping_fee())
+print("Ship Weight:", ship1.calculate_ship_weight())
 
-print(list_vehicles)
-print(ship1.calculate_ship_weight())
-
+print("\n=== SHIP 2 ===")
 ship2.display()
-print(ship2.calculate_shipping_fee())
+print("Shipping Fee:", ship2.calculate_shipping_fee())
+print("Ship Weight:", ship2.calculate_ship_weight())
 
-print(list_vehicles)
-print(ship2.calculate_ship_weight())
+print("\nUnplaced Vehicles:", unplaced_after_ship2)
 
 armada1 = Armada(ship_list, all_vehicles)
-print(armada1.calculate_armada_shipping_fee())
-for i in range(100):
-    if (armada1.switch_vehicle_succes()):
-        break 
-ship1.display()
-print()
-ship2.display()
+print("\nTotal Armada Shipping Fee:", armada1.calculate_armada_shipping_fee())
 
+print("\nMencoba swap kendaraan di armada...")
+for i in range(100):
+    if armada1.switch_vehicle_success():
+        break
+
+print("\nSetelah Swap:")
+print("=== SHIP 1 ===")
+ship1.display()
+print("\n=== SHIP 2 ===")
+ship2.display()
 
 # matriks mash bisa overlapp kalo lebih harusnya gagal input
 # coordinat sistemnya masih array meaning x = vertikal y = horizontal
