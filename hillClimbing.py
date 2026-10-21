@@ -24,10 +24,13 @@ def get_neighbor(armada:Armada):
                 ship.change_orientation_success(vehicle)
     return neighbor
     
-def hill_climbing(armada, max_sideways=0, n_neighbors=50):
+def hill_climbing(armada, max_sideways=0, n_neighbors=50, on_iteration = None):
     fee_sekarang = armada.calculate_armada_shipping_fee()
     sideways = 0
+    history = [fee_sekarang]
 
+    if on_iteration:
+        on_iteration(0,fee_sekarang, armada)
     while True:
         fee_terbaik = -1
         kandidat = []
@@ -50,7 +53,10 @@ def hill_climbing(armada, max_sideways=0, n_neighbors=50):
             sideways += 1
         else:
             break
-    return armada, fee_sekarang
+        history.append(fee_sekarang)
+        if on_iteration:
+            on_iteration(len(history) - 1, fee_sekarang, armada)
+    return armada, fee_sekarang, history
 
 
 def new_random_armada(armada):
@@ -64,11 +70,12 @@ def new_random_armada(armada):
     fresh.random_state_armada(vehicles)
     return fresh
 
-def random_restart(armada, max_sideways = 0, n_neighbor = 50, max_restart=100):
-    best,best_fee = hill_climbing(armada, max_sideways, n_neighbor)
-    for percobaan in range(1, max_restart + 1):
-        hasil, fee = hill_climbing(best, max_sideways, n_neighbor)
+def random_restart(armada, max_sideways = 0, n_neighbor = 50, max_restart=100, on_iteration = None):
+    best,best_fee,best_history = hill_climbing(armada, max_sideways, n_neighbor, on_iteration)
+    for _ in range(max_restart):
+        hasil, fee, history = hill_climbing(new_random_armada(armada), max_sideways, n_neighbor, on_iteration)
         if fee > best_fee:
             best_fee = fee
             best = hasil
-    return best, best_fee, percobaan
+            best_history = history
+    return best, best_fee, best_history
