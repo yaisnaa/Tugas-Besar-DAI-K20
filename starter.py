@@ -14,7 +14,7 @@ class Vehicle:
             self.coor = [-1, -1]
         else:
             self.coor = [coor[0], coor[1]]
-
+    
     def __str__(self) -> str:
         return f"{self.id}"
 
@@ -130,9 +130,9 @@ class Ship:
         original_orientation = vehicle.orientation
         x_coor = vehicle.coor[0]
         y_coor = vehicle.coor[1]
-        self.remove_vehicle_success(vehicle)
         vehicle.orientation = "vertical" if vehicle.orientation == "horizontal" else "horizontal"
 
+        self.remove_vehicle_success(vehicle)
         if self.inputing_vehicle_success(vehicle, x_coor, y_coor):
             return True
         
@@ -157,7 +157,7 @@ class Ship:
         self.inputing_vehicle_success(vehicle, old_x, old_y)
         return False
 
-    def switch_vehicles_success(self, vehicle_a: Vehicle, vehicle_b: Vehicle) -> bool: 
+    def switch_vehicles_success(self, vehicle_a: Vehicle, vehicle_b: Vehicle) -> bool:
         in_a = vehicle_a in self.list_vehicles_in_ship
         in_b = vehicle_b in self.list_vehicles_in_ship
         
@@ -311,12 +311,12 @@ unplaced_after_ship2 = ship2.random_state_ship(unplaced_after_ship1)
 
 ship_list = {ship1, ship2}
 
-print(f"=== SHIP {ship1.id}===")
+print("=== SHIP 1 ===")
 ship1.display()
 print("Shipping Fee:", ship1.calculate_shipping_fee())
 print("Ship Weight:", ship1.calculate_ship_weight())
 
-print(f"\n=== SHIP {ship2.id}===")
+print("\n=== SHIP 2 ===")
 ship2.display()
 print("Shipping Fee:", ship2.calculate_shipping_fee())
 print("Ship Weight:", ship2.calculate_ship_weight())
@@ -332,9 +332,9 @@ for i in range(100):
         break
 
 print("\nSetelah Swap:")
-print(f"=== SHIP {ship1.id} ===")
+print("=== SHIP 1 ===")
 ship1.display()
-print(f"\n=== SHIP {ship2.id} ===")
+print("\n=== SHIP 2 ===")
 ship2.display()
 
 # matriks mash bisa overlapp kalo lebih harusnya gagal input
