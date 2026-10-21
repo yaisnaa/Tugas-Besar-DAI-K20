@@ -189,18 +189,137 @@ class Individual:
             print(" ".join(row))
 
 
-if __name__ == "__main__":
-    ind1 = Individual(list_vehicles, ship_w=10, ship_l=20, max_capacity=200)
-    ind1.randomize()
-    print("=== INDIVIDU 1 ===")
-    ind1.display()
+# ==========================================
+# BATCH 2: OPERATOR GENETIK
+# ==========================================
 
-    print("\n=== UJI INDEPENDENSI STATE (CLONE) ===")
-    ind2 = ind1.clone()
+def tournament_selection(population, k=3):
+    # ambil k kandidat acak dari populasi
+    candidates = random.sample(population, k)
     
-    # ubah salah satu koordinat gen di ind1
-    target_id = list_vehicles[0].id
-    ind1.genes[target_id]["x"] = 999
+    # cari kandidat dengan fitness tertinggi di antara k peserta
+    best_candidate = candidates[0]
+    for ind in candidates:
+        if ind.fitness > best_candidate.fitness:
+            best_candidate = ind
+            
+    return best_candidate
+
+
+def crossover(parent1, parent2, crossover_rate=0.8):
+    # jika tidak lolos probabilitas kawin, anak mengkloning parent1
+    if random.random() > crossover_rate:
+        return parent1.clone()
+
+    child = Individual(parent1.vehicles, parent1.ship_w, parent1.ship_l, parent1.max_capacity)
     
-    print(f"Koordinat x mobil '{target_id}' di ind1: {ind1.genes[target_id]['x']}")
-    print(f"Koordinat x mobil '{target_id}' di ind2 (harus tetap asli): {ind2.genes[target_id]['x']}")
+    # kombinasikan gen: peluang 50% dari parent1, 50% dari parent2
+    for v in parent1.vehicles:
+        if random.random() < 0.5:
+            source_gene = parent1.genes[v.id]
+        else:
+            source_gene = parent2.genes[v.id]
+
+        child.genes[v.id] = {
+            "is_loaded": source_gene["is_loaded"],
+            "x": source_gene["x"],
+            "y": source_gene["y"],
+            "orientation": source_gene["orientation"]
+        }
+
+    # reparasi otomatis jika ada mobil yang bertabrakan dari gabungan kedua orang tua
+    child.evaluate()
+    return child
+
+
+def mutate(individual, mutation_rate=0.2):
+    # jika tidak lolos probabilitas mutasi, lewati
+    if random.random() > mutation_rate:
+        return
+
+    # kumpulkan daftar mobil yang saat ini di dalam dan di luar kapal
+    loaded_ids = []
+    unloaded_ids = []
+    for vid, state in individual.genes.items():
+        if state["is_loaded"]:
+            loaded_ids.append(vid)
+        else:
+            unloaded_ids.append(vid)
+
+    # pilih salah satu dari 3 aksi mutasi yang sesuai spesifikasi
+    mutation_type = random.randint(1, 3)
+
+    if mutation_type == 1 and len(loaded_ids) > 0:
+        # aksi 1: geser koordinat mobil di dalam kapal ke posisi acak baru
+        target_id = random.choice(loaded_ids)
+        individual.genes[target_id]["x"] = random.randint(0, individual.ship_w - 1)
+        individual.genes[target_id]["y"] = random.randint(0, individual.ship_l - 1)
+
+    elif mutation_type == 2 and len(loaded_ids) > 0:
+        # aksi 2: putar orientasi mobil
+        target_id = random.choice(loaded_ids)
+        current_orient = individual.genes[target_id]["orientation"]
+        if current_orient == "vertical":
+            individual.genes[target_id]["orientation"] = "horizontal"
+        else:
+            individual.genes[target_id]["orientation"] = "vertical"
+
+    elif mutation_type == 3 and len(unloaded_ids) > 0:
+        # aksi 3: coba masukkan mobil dari luar kapal ke posisi acak
+        target_id = random.choice(unloaded_ids)
+        individual.genes[target_id]["is_loaded"] = True
+        individual.genes[target_id]["x"] = random.randint(0, individual.ship_w - 1)
+        individual.genes[target_id]["y"] = random.randint(0, individual.ship_l - 1)
+
+    # validasi dan reparasi ulang setelah mengalami mutasi
+    individual.evaluate()
+
+
+def get_elites(population, elite_count=2):
+    # urutkan populasi dari fitness tertinggi ke terendah secara manual
+    sorted_pop = list(population)
+    sorted_pop.sort(key=lambda ind: ind.fitness, reverse=True)
+    
+    elites = []
+    for i in range(elite_count):
+        elites.append(sorted_pop[i].clone())
+        
+    return elites
+
+
+if __name__ == "__main__":
+    print("=== PENGUJIAN BATCH 2: OPERATOR GENETIK ===")
+    
+    # 1. Uji Buat Populasi Mini
+    pop = []
+    for _ in range(5):
+        ind = Individual(list_vehicles, ship_w=10, ship_l=20, max_capacity=200)
+        ind.randomize()
+        pop.append(ind)
+    print(f"Berhasil membuat populasi mini: {len(pop)} individu")
+    for i, ind in enumerate(pop):
+        print(f"Individu {i+1} Fitness: {ind.fitness}")
+
+    # 2. Uji Tournament Selection
+    parent1 = tournament_selection(pop, k=3)
+    parent2 = tournament_selection(pop, k=3)
+    print(f"\nParent 1 terpilih: Fitness {parent1.fitness}")
+    print(f"Parent 2 terpilih: Fitness {parent2.fitness}")
+
+    # 3. Uji Crossover
+    child = crossover(parent1, parent2, crossover_rate=1.0)
+    print(f"\nAnak hasil persilangan: Fitness {child.fitness}, Berat {child.total_weight}/{child.max_capacity}")
+    assert child.total_weight <= child.max_capacity, "Error: Berat anak melebihi kapasitas!"
+
+    # 4. Uji Mutasi
+    print("\nSebelum mutasi, Fitness:", child.fitness)
+    mutate(child, mutation_rate=1.0) # paksa mutasi 100%
+    print("Setelah mutasi, Fitness:", child.fitness)
+    assert child.total_weight <= child.max_capacity, "Error: Berat setelah mutasi melebihi kapasitas!"
+
+    # 5. Uji Elitisme
+    elites = get_elites(pop, elite_count=2)
+    print(f"\n2 Elite terbaik: Fitness {elites[0].fitness} dan {elites[1].fitness}")
+    assert elites[0].fitness >= elites[1].fitness, "Error: Urutan elit tidak sesuai!"
+    
+    print("\nSemua pengujian Batch 2 berhasil dan valid!")
