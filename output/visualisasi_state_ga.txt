@@ -1,0 +1,612 @@
+Eksperimen 1: Pop=50, Iter=50, Run=1
+State Awal (Fitness: 425.0):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), h(fee:50, w:25), l(fee:28, w:13), p(fee:33, w:15), q(fee:48, w:24), t(fee:55, w:26), w(fee:40, w:18), x(fee:30, w:14), z(fee:38, w:17), B(fee:16, w:8), C(fee:52, w:25)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), f(fee:40, w:18), g(fee:15, w:8), i(fee:30, w:14), j(fee:45, w:20), k(fee:5, w:11), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), y(fee:35, w:16), A(fee:24, w:11), D(fee:34, w:15), E(fee:46, w:22), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18), I(fee:48, w:23)
+z z 0 w w h h 0 0 0 0 0 l l 0 0 0 0 0 0
+z z 0 w w h h 0 0 0 0 0 l l 0 0 0 0 0 0
+z z 0 w w h h q q 0 0 0 l l 0 0 0 0 0 0
+z z 0 w w h h q q 0 x x x 0 0 0 d d 0 0
+0 0 0 0 0 h h q q 0 x x x 0 0 0 d d 0 0
+0 B B 0 p p p q q 0 0 0 0 t t t d d 0 0
+0 B B 0 p p p q q 0 C C C t t t d d 0 0
+0 0 0 0 p p p 0 0 0 C C C t t t 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 C C C t t t 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 C C C 0 0 0 0 0 0 0
+
+State Akhir (Fitness: 435.0, Durasi: 0.5102 detik):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), f(fee:40, w:18), h(fee:50, w:25), j(fee:45, w:20), p(fee:33, w:15), t(fee:55, w:26), w(fee:40, w:18), x(fee:30, w:14), y(fee:35, w:16), z(fee:38, w:17), D(fee:34, w:15)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), A(fee:24, w:11), B(fee:16, w:8), C(fee:52, w:25), E(fee:46, w:22), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18), I(fee:48, w:23)
+0 0 0 0 0 h h h h h 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 h h h h h 0 0 0 0 0 0 0 0 0 0
+0 0 0 j j 0 0 0 0 0 0 0 0 0 t t t t 0 0
+w w 0 j j p p p x x x 0 0 0 t t t t 0 0
+w w 0 j j p p p x x x 0 0 0 t t t t 0 0
+w w 0 j j p p p f f f f 0 0 D D D 0 0 0
+w w 0 j j z z 0 f f f f 0 0 D D D 0 0 0
+0 0 0 0 0 z z 0 0 0 0 0 0 0 D D D y y y
+0 0 0 0 0 z z 0 0 0 0 d d d d 0 0 y y y
+0 0 0 0 0 z z 0 0 0 0 d d d d 0 0 y y y
+--------------------------------------------------
+
+Eksperimen 1: Pop=50, Iter=50, Run=2
+State Awal (Fitness: 427.0):
+Kendaraan di Kapal S1 (10):
+  d(fee:35, w:15), f(fee:40, w:18), h(fee:50, w:25), j(fee:45, w:20), t(fee:55, w:26), x(fee:30, w:14), z(fee:38, w:17), C(fee:52, w:25), E(fee:46, w:22), H(fee:36, w:18)
+Kendaraan di Luar Kapal (25):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), w(fee:40, w:18), y(fee:35, w:16), A(fee:24, w:11), B(fee:16, w:8), D(fee:34, w:15), F(fee:44, w:21), G(fee:26, w:13), I(fee:48, w:23)
+0 z z z z 0 0 0 0 t t t t 0 0 0 0 0 0 0
+0 z z z z 0 0 d d t t t t 0 0 0 0 0 0 0
+C C C 0 0 0 0 d d t t t t 0 0 0 0 0 0 0
+C C C 0 0 0 0 d d 0 0 0 0 0 0 0 x x 0 0
+C C C 0 0 0 0 d d 0 0 0 0 0 0 0 x x E E
+C C C 0 0 0 0 0 0 h h 0 0 0 0 0 x x E E
+0 0 0 0 0 H H H H h h 0 0 0 0 0 f f E E
+0 0 0 0 0 H H H H h h 0 0 0 0 0 f f E E
+0 0 0 0 0 0 0 0 0 h h j j j j j f f E E
+0 0 0 0 0 0 0 0 0 h h j j j j j f f 0 0
+
+State Akhir (Fitness: 437.0, Durasi: 0.4000 detik):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), j(fee:45, w:20), p(fee:33, w:15), t(fee:55, w:26), w(fee:40, w:18), y(fee:35, w:16), z(fee:38, w:17), A(fee:24, w:11), C(fee:52, w:25), D(fee:34, w:15), E(fee:46, w:22)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), f(fee:40, w:18), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), B(fee:16, w:8), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18), I(fee:48, w:23)
+0 z z z z 0 0 0 0 t t t t 0 0 0 0 0 0 0
+0 z z z z 0 0 d d t t t t 0 0 0 0 0 0 0
+C C C 0 0 0 0 d d t t t t A A A 0 E E 0
+C C C 0 y y y d d 0 0 0 0 A A A 0 E E 0
+C C C 0 y y y d d 0 0 0 0 0 0 0 0 E E 0
+C C C 0 y y y 0 0 0 0 p p p 0 0 0 E E 0
+0 0 0 0 0 0 w w 0 0 0 p p p 0 0 0 E E 0
+0 0 D D D 0 w w 0 0 0 p p p 0 0 0 0 0 0
+0 0 D D D 0 w w 0 0 0 j j j j j 0 0 0 0
+0 0 D D D 0 w w 0 0 0 j j j j j 0 0 0 0
+--------------------------------------------------
+
+Eksperimen 1: Pop=50, Iter=50, Run=3
+State Awal (Fitness: 424.0):
+Kendaraan di Kapal S1 (10):
+  d(fee:35, w:15), e(fee:25, w:12), f(fee:40, w:18), h(fee:50, w:25), p(fee:33, w:15), q(fee:48, w:24), t(fee:55, w:26), z(fee:38, w:17), C(fee:52, w:25), I(fee:48, w:23)
+Kendaraan di Luar Kapal (25):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), g(fee:15, w:8), i(fee:30, w:14), j(fee:45, w:20), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), w(fee:40, w:18), x(fee:30, w:14), y(fee:35, w:16), A(fee:24, w:11), B(fee:16, w:8), D(fee:34, w:15), E(fee:46, w:22), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18)
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 f f
+0 0 0 0 0 0 h h h h h 0 0 0 0 0 0 0 f f
+0 0 0 0 0 0 h h h h h 0 0 0 0 0 0 0 f f
+I I I I 0 0 q q 0 0 0 0 0 0 C C C 0 f f
+I I I I 0 0 q q 0 0 0 0 0 0 C C C 0 0 0
+I I I I 0 0 q q 0 z z 0 0 0 C C C 0 0 0
+0 0 0 0 0 0 q q 0 z z p p p C C C 0 0 0
+e e 0 0 0 0 q q 0 z z p p p t t t t 0 0
+e e 0 0 d d d d 0 z z p p p t t t t 0 0
+e e 0 0 d d d d 0 0 0 0 0 0 t t t t 0 0
+
+State Akhir (Fitness: 437.0, Durasi: 0.4653 detik):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), f(fee:40, w:18), i(fee:30, w:14), j(fee:45, w:20), p(fee:33, w:15), t(fee:55, w:26), w(fee:40, w:18), y(fee:35, w:16), z(fee:38, w:17), C(fee:52, w:25), D(fee:34, w:15)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), A(fee:24, w:11), B(fee:16, w:8), E(fee:46, w:22), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18), I(fee:48, w:23)
+0 0 0 d d d d p p p 0 0 0 0 0 0 0 0 0 0
+0 0 0 d d d d p p p 0 0 f f f f 0 0 0 0
+0 0 w w w w 0 p p p 0 0 f f f f 0 0 0 0
+0 0 w w w w 0 0 0 j j j j j 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 j j j j j D D D 0 0 0
+0 0 0 0 0 0 0 0 0 z z C C C D D D 0 0 0
+i i i 0 0 t t t t z z C C C D D D 0 0 0
+i i i 0 0 t t t t z z C C C 0 0 0 y y y
+i i i 0 0 t t t t z z C C C 0 0 0 y y y
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 y y y
+--------------------------------------------------
+
+Eksperimen 1: Pop=50, Iter=100, Run=1
+State Awal (Fitness: 428.0):
+Kendaraan di Kapal S1 (10):
+  d(fee:35, w:15), f(fee:40, w:18), j(fee:45, w:20), t(fee:55, w:26), y(fee:35, w:16), z(fee:38, w:17), C(fee:52, w:25), F(fee:44, w:21), H(fee:36, w:18), I(fee:48, w:23)
+Kendaraan di Luar Kapal (25):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), w(fee:40, w:18), x(fee:30, w:14), A(fee:24, w:11), B(fee:16, w:8), D(fee:34, w:15), E(fee:46, w:22), G(fee:26, w:13)
+z z z z 0 0 0 j j 0 0 0 0 0 0 d d d d 0
+z z z z t t t j j 0 0 0 0 0 0 d d d d 0
+0 0 0 0 t t t j j 0 0 0 0 0 0 0 0 0 0 0
+I I I 0 t t t j j 0 0 0 0 0 0 0 0 0 0 0
+I I I 0 t t t j j 0 0 0 0 0 0 0 f f f f
+I I I 0 0 0 0 F F F F F 0 0 0 0 f f f f
+I I I 0 0 0 0 F F F F F C C C 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 C C C y y y 0 0
+0 0 0 0 0 0 0 H H H H 0 C C C y y y 0 0
+0 0 0 0 0 0 0 H H H H 0 C C C y y y 0 0
+
+State Akhir (Fitness: 437.0, Durasi: 2.7513 detik):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), f(fee:40, w:18), j(fee:45, w:20), p(fee:33, w:15), t(fee:55, w:26), w(fee:40, w:18), y(fee:35, w:16), A(fee:24, w:11), C(fee:52, w:25), D(fee:34, w:15), F(fee:44, w:21)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), z(fee:38, w:17), B(fee:16, w:8), E(fee:46, w:22), G(fee:26, w:13), H(fee:36, w:18), I(fee:48, w:23)
+0 0 0 0 0 0 0 j j j j j 0 0 0 0 0 0 0 0
+0 0 0 0 t t t j j j j j 0 0 0 0 0 0 0 0
+d d d d t t t 0 0 0 D D D 0 0 f f f f 0
+d d d d t t t 0 0 0 D D D 0 0 f f f f 0
+0 0 0 0 t t t 0 0 0 D D D 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 F F F F F 0 0 0 p p p 0 0
+0 0 0 0 0 0 0 F F F F F C C C p p p 0 0
+y y y 0 0 0 0 0 0 A A A C C C p p p 0 0
+y y y 0 0 w w w w A A A C C C 0 0 0 0 0
+y y y 0 0 w w w w 0 0 0 C C C 0 0 0 0 0
+--------------------------------------------------
+
+Eksperimen 1: Pop=50, Iter=100, Run=2
+State Awal (Fitness: 429.0):
+Kendaraan di Kapal S1 (10):
+  d(fee:35, w:15), f(fee:40, w:18), i(fee:30, w:14), j(fee:45, w:20), q(fee:48, w:24), t(fee:55, w:26), z(fee:38, w:17), E(fee:46, w:22), F(fee:44, w:21), I(fee:48, w:23)
+Kendaraan di Luar Kapal (25):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), w(fee:40, w:18), x(fee:30, w:14), y(fee:35, w:16), A(fee:24, w:11), B(fee:16, w:8), C(fee:52, w:25), D(fee:34, w:15), G(fee:26, w:13), H(fee:36, w:18)
+0 0 0 0 0 i i i 0 0 0 0 0 0 0 0 f f f f
+0 0 0 0 0 i i i 0 0 0 0 q q 0 0 f f f f
+0 0 0 E E i i i 0 0 0 0 q q 0 0 0 0 0 0
+j j 0 E E 0 0 0 t t t t q q 0 0 0 0 0 0
+j j 0 E E z z 0 t t t t q q 0 0 0 d d 0
+j j 0 E E z z 0 t t t t q q 0 0 0 d d 0
+j j 0 E E z z 0 0 0 0 0 I I I 0 0 d d 0
+j j 0 0 0 z z 0 0 0 0 0 I I I 0 0 d d 0
+F F F F F 0 0 0 0 0 0 0 I I I 0 0 0 0 0
+F F F F F 0 0 0 0 0 0 0 I I I 0 0 0 0 0
+
+State Akhir (Fitness: 438.0, Durasi: 3.1938 detik):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), f(fee:40, w:18), j(fee:45, w:20), t(fee:55, w:26), w(fee:40, w:18), y(fee:35, w:16), z(fee:38, w:17), A(fee:24, w:11), D(fee:34, w:15), F(fee:44, w:21), I(fee:48, w:23)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), B(fee:16, w:8), C(fee:52, w:25), E(fee:46, w:22), G(fee:26, w:13), H(fee:36, w:18)
+D D D A A 0 0 F F F F F 0 0 0 0 f f f f
+D D D A A 0 0 F F F F F 0 0 0 0 f f f f
+D D D A A j j j j j 0 t t t 0 0 0 0 0 0
+0 0 0 0 0 j j j j j 0 t t t 0 0 0 0 0 0
+0 0 0 0 0 z z 0 0 0 0 t t t 0 0 d d 0 0
+I I I I 0 z z 0 0 0 0 t t t 0 0 d d 0 0
+I I I I 0 z z 0 0 y y y 0 0 0 0 d d 0 0
+I I I I 0 z z 0 0 y y y 0 0 0 0 d d 0 0
+0 0 0 0 0 0 0 0 0 y y y w w w w 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 w w w w 0 0 0 0
+--------------------------------------------------
+
+Eksperimen 1: Pop=50, Iter=100, Run=3
+State Awal (Fitness: 427.0):
+Kendaraan di Kapal S1 (10):
+  f(fee:40, w:18), h(fee:50, w:25), j(fee:45, w:20), q(fee:48, w:24), t(fee:55, w:26), x(fee:30, w:14), y(fee:35, w:16), z(fee:38, w:17), C(fee:52, w:25), D(fee:34, w:15)
+Kendaraan di Luar Kapal (25):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), d(fee:35, w:15), e(fee:25, w:12), g(fee:15, w:8), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), w(fee:40, w:18), A(fee:24, w:11), B(fee:16, w:8), E(fee:46, w:22), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18), I(fee:48, w:23)
+j j 0 0 0 0 x x y y y 0 0 0 0 0 0 0 0 0
+j j 0 0 0 0 x x y y y h h 0 q q q q q 0
+j j 0 f f 0 x x y y y h h 0 q q q q q 0
+j j 0 f f C C C 0 0 0 h h 0 0 0 0 0 0 0
+j j 0 f f C C C 0 0 0 h h 0 0 0 0 0 0 0
+0 0 0 f f C C C 0 0 0 h h 0 t t t z z 0
+D D D 0 0 C C C 0 0 0 0 0 0 t t t z z 0
+D D D 0 0 0 0 0 0 0 0 0 0 0 t t t z z 0
+D D D 0 0 0 0 0 0 0 0 0 0 0 t t t z z 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+State Akhir (Fitness: 437.0, Durasi: 2.9940 detik):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), f(fee:40, w:18), j(fee:45, w:20), l(fee:28, w:13), t(fee:55, w:26), w(fee:40, w:18), z(fee:38, w:17), A(fee:24, w:11), C(fee:52, w:25), D(fee:34, w:15), E(fee:46, w:22)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), y(fee:35, w:16), B(fee:16, w:8), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18), I(fee:48, w:23)
+0 0 w w w w A A A E E d d d d 0 D D D 0
+0 0 w w w w A A A E E d d d d 0 D D D 0
+0 0 0 0 0 0 0 0 0 E E 0 0 0 j j D D D 0
+0 0 0 0 0 C C C 0 E E 0 0 0 j j 0 0 0 0
+0 0 0 0 0 C C C 0 E E 0 0 0 j j 0 0 0 0
+0 0 0 0 0 C C C 0 0 0 0 0 0 j j 0 z z 0
+0 0 0 0 0 C C C f f f f 0 0 j j 0 z z 0
+0 0 0 0 0 0 0 0 f f f f t t t t 0 z z 0
+0 0 0 0 0 0 0 0 l l l 0 t t t t 0 z z 0
+0 0 0 0 0 0 0 0 l l l 0 t t t t 0 0 0 0
+--------------------------------------------------
+
+Eksperimen 1: Pop=50, Iter=200, Run=1
+State Awal (Fitness: 425.0):
+Kendaraan di Kapal S1 (11):
+  b(fee:20, w:10), n(fee:32, w:16), p(fee:33, w:15), t(fee:55, w:26), w(fee:40, w:18), x(fee:30, w:14), y(fee:35, w:16), C(fee:52, w:25), D(fee:34, w:15), E(fee:46, w:22), I(fee:48, w:23)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), c(fee:20, w:10), d(fee:35, w:15), e(fee:25, w:12), f(fee:40, w:18), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), j(fee:45, w:20), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), o(fee:3, w:9), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), z(fee:38, w:17), A(fee:24, w:11), B(fee:16, w:8), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18)
+0 0 0 0 0 0 0 0 0 w w 0 0 0 0 0 0 b b b
+0 0 0 0 n n 0 x x w w y y y 0 0 0 b b b
+0 0 0 0 n n 0 x x w w y y y 0 0 0 0 0 0
+0 0 0 0 n n 0 x x w w y y y 0 E E E E E
+0 0 0 0 n n 0 0 0 0 0 C C C C E E E E E
+0 0 0 0 0 0 0 0 0 0 0 C C C C 0 I I I 0
+0 t t t t 0 0 0 0 0 0 C C C C 0 I I I 0
+0 t t t t 0 0 D D D 0 0 0 p p p I I I 0
+0 t t t t 0 0 D D D 0 0 0 p p p I I I 0
+0 0 0 0 0 0 0 D D D 0 0 0 p p p 0 0 0 0
+
+State Akhir (Fitness: 436.0, Durasi: 1.8131 detik):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), f(fee:40, w:18), i(fee:30, w:14), j(fee:45, w:20), p(fee:33, w:15), t(fee:55, w:26), w(fee:40, w:18), A(fee:24, w:11), C(fee:52, w:25), D(fee:34, w:15), I(fee:48, w:23)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), y(fee:35, w:16), z(fee:38, w:17), B(fee:16, w:8), E(fee:46, w:22), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18)
+0 0 0 0 0 0 0 0 C C C 0 f f f f 0 0 0 0
+0 0 0 0 0 0 0 0 C C C 0 f f f f I I I I
+0 0 d d j j 0 0 C C C 0 0 0 0 0 I I I I
+0 0 d d j j 0 0 C C C 0 0 D D D I I I I
+A A d d j j 0 0 0 0 0 0 0 D D D 0 0 0 0
+A A d d j j 0 0 0 0 0 0 0 D D D 0 0 0 0
+A A 0 0 j j 0 0 0 0 0 t t t 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 p p p t t t i i i 0 0 0
+0 0 w w w w 0 0 p p p t t t i i i 0 0 0
+0 0 w w w w 0 0 p p p t t t i i i 0 0 0
+--------------------------------------------------
+
+Eksperimen 1: Pop=50, Iter=200, Run=2
+State Awal (Fitness: 433.0):
+Kendaraan di Kapal S1 (11):
+  c(fee:20, w:10), d(fee:35, w:15), h(fee:50, w:25), j(fee:45, w:20), p(fee:33, w:15), t(fee:55, w:26), w(fee:40, w:18), y(fee:35, w:16), z(fee:38, w:17), D(fee:34, w:15), I(fee:48, w:23)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), e(fee:25, w:12), f(fee:40, w:18), g(fee:15, w:8), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), A(fee:24, w:11), B(fee:16, w:8), C(fee:52, w:25), E(fee:46, w:22), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18)
+0 0 0 0 0 0 0 0 0 0 0 d d d d 0 0 0 w w
+0 0 0 0 0 0 0 0 y y y d d d d D D D w w
+0 0 0 0 0 0 0 0 y y y j j 0 0 D D D w w
+h h 0 t t t t 0 y y y j j 0 0 D D D w w
+h h 0 t t t t 0 0 0 0 j j 0 0 0 c c 0 0
+h h 0 t t t t 0 0 0 0 j j 0 0 0 c c z z
+h h 0 0 0 I I I 0 0 0 j j 0 0 0 c c z z
+h h 0 0 0 I I I 0 0 0 0 p p p 0 0 0 z z
+0 0 0 0 0 I I I 0 0 0 0 p p p 0 0 0 z z
+0 0 0 0 0 I I I 0 0 0 0 p p p 0 0 0 0 0
+
+State Akhir (Fitness: 438.0, Durasi: 3.1466 detik):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), f(fee:40, w:18), j(fee:45, w:20), p(fee:33, w:15), t(fee:55, w:26), w(fee:40, w:18), z(fee:38, w:17), A(fee:24, w:11), D(fee:34, w:15), E(fee:46, w:22), I(fee:48, w:23)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), y(fee:35, w:16), B(fee:16, w:8), C(fee:52, w:25), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18)
+f f 0 0 0 0 0 0 0 0 0 d d d d 0 0 0 w w
+f f 0 0 0 0 0 0 0 0 0 d d d d D D D w w
+f f 0 E E 0 0 t t t t j j 0 0 D D D w w
+f f 0 E E 0 0 t t t t j j 0 0 D D D w w
+0 0 0 E E 0 0 t t t t j j 0 0 0 0 0 0 0
+0 0 0 E E 0 0 0 0 0 0 j j A A A z z z z
+0 0 0 E E I I I 0 0 0 j j A A A z z z z
+0 0 0 0 0 I I I 0 0 p p p 0 0 0 0 0 0 0
+0 0 0 0 0 I I I 0 0 p p p 0 0 0 0 0 0 0
+0 0 0 0 0 I I I 0 0 p p p 0 0 0 0 0 0 0
+--------------------------------------------------
+
+Eksperimen 1: Pop=50, Iter=200, Run=3
+State Awal (Fitness: 427.0):
+Kendaraan di Kapal S1 (10):
+  f(fee:40, w:18), j(fee:45, w:20), t(fee:55, w:26), y(fee:35, w:16), z(fee:38, w:17), C(fee:52, w:25), D(fee:34, w:15), F(fee:44, w:21), H(fee:36, w:18), I(fee:48, w:23)
+Kendaraan di Luar Kapal (25):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), d(fee:35, w:15), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), w(fee:40, w:18), x(fee:30, w:14), A(fee:24, w:11), B(fee:16, w:8), E(fee:46, w:22), G(fee:26, w:13)
+F F 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+F F 0 0 0 H H I I I 0 z z z z 0 0 0 0 0
+F F 0 0 0 H H I I I 0 z z z z 0 0 j j 0
+F F 0 0 0 H H I I I 0 0 0 0 0 0 0 j j 0
+F F 0 0 0 H H I I I 0 0 0 0 0 0 0 j j 0
+0 f f 0 0 0 D D D 0 0 0 0 0 0 0 0 j j 0
+0 f f 0 0 0 D D D C C C C t t t 0 j j 0
+0 f f y y y D D D C C C C t t t 0 0 0 0
+0 f f y y y 0 0 0 C C C C t t t 0 0 0 0
+0 0 0 y y y 0 0 0 0 0 0 0 t t t 0 0 0 0
+
+State Akhir (Fitness: 438.0, Durasi: 1.5244 detik):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), f(fee:40, w:18), j(fee:45, w:20), t(fee:55, w:26), w(fee:40, w:18), y(fee:35, w:16), z(fee:38, w:17), A(fee:24, w:11), D(fee:34, w:15), F(fee:44, w:21), I(fee:48, w:23)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), B(fee:16, w:8), C(fee:52, w:25), E(fee:46, w:22), G(fee:26, w:13), H(fee:36, w:18)
+f f f f 0 I I I A A 0 0 0 0 0 0 d d d d
+f f f f 0 I I I A A 0 z z z z 0 d d d d
+0 0 0 0 0 I I I A A 0 z z z z 0 0 0 0 0
+0 0 y y y I I I 0 j j j j j 0 0 0 0 0 0
+0 0 y y y 0 0 0 0 j j j j j 0 0 0 0 0 0
+0 0 y y y 0 D D D 0 0 t t t 0 0 0 0 0 0
+0 w w 0 0 0 D D D 0 0 t t t 0 0 0 0 0 0
+0 w w 0 0 0 D D D 0 0 t t t 0 0 0 0 0 0
+0 w w 0 F F F F F 0 0 t t t 0 0 0 0 0 0
+0 w w 0 F F F F F 0 0 0 0 0 0 0 0 0 0 0
+--------------------------------------------------
+
+Eksperimen 2: Pop=20, Iter=100, Run=1
+State Awal (Fitness: 428.0):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), e(fee:25, w:12), f(fee:40, w:18), j(fee:45, w:20), l(fee:28, w:13), q(fee:48, w:24), t(fee:55, w:26), z(fee:38, w:17), B(fee:16, w:8), C(fee:52, w:25), E(fee:46, w:22)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), w(fee:40, w:18), x(fee:30, w:14), y(fee:35, w:16), A(fee:24, w:11), D(fee:34, w:15), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18), I(fee:48, w:23)
+0 0 0 0 0 0 0 0 0 0 E E 0 0 0 0 0 0 z z
+0 0 C C C C q q B B E E j j 0 0 0 0 z z
+0 0 C C C C q q B B E E j j 0 0 0 0 z z
+0 0 C C C C q q 0 0 E E j j l l 0 0 z z
+0 0 0 0 0 0 q q 0 0 E E j j l l 0 0 0 0
+0 0 0 0 0 0 q q 0 t t t j j l l 0 0 0 0
+0 f f 0 0 0 0 0 0 t t t 0 0 0 0 0 0 0 0
+0 f f 0 d d d d 0 t t t 0 0 0 0 0 e e 0
+0 f f 0 d d d d 0 t t t 0 0 0 0 0 e e 0
+0 f f 0 0 0 0 0 0 0 0 0 0 0 0 0 0 e e 0
+
+State Akhir (Fitness: 437.0, Durasi: 0.3238 detik):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), f(fee:40, w:18), j(fee:45, w:20), t(fee:55, w:26), w(fee:40, w:18), x(fee:30, w:14), z(fee:38, w:17), A(fee:24, w:11), C(fee:52, w:25), D(fee:34, w:15), F(fee:44, w:21)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), y(fee:35, w:16), B(fee:16, w:8), E(fee:46, w:22), G(fee:26, w:13), H(fee:36, w:18), I(fee:48, w:23)
+z z 0 0 0 0 0 0 0 F F 0 0 0 0 0 0 0 0 0
+z z C C C C 0 0 0 F F 0 j j j j j 0 0 0
+z z C C C C t t t F F 0 j j j j j 0 0 0
+z z C C C C t t t F F 0 0 0 0 0 A A A 0
+0 0 0 0 0 0 t t t F F 0 0 D D D A A A 0
+0 0 0 0 0 0 t t t 0 0 0 0 D D D 0 0 0 0
+0 f f 0 d d 0 w w 0 0 0 0 D D D 0 0 0 0
+0 f f 0 d d 0 w w 0 0 0 0 0 0 0 0 x x x
+0 f f 0 d d 0 w w 0 0 0 0 0 0 0 0 x x x
+0 f f 0 d d 0 w w 0 0 0 0 0 0 0 0 0 0 0
+--------------------------------------------------
+
+Eksperimen 2: Pop=20, Iter=100, Run=2
+State Awal (Fitness: 423.0):
+Kendaraan di Kapal S1 (10):
+  c(fee:20, w:10), d(fee:35, w:15), j(fee:45, w:20), q(fee:48, w:24), r(fee:42, w:21), t(fee:55, w:26), C(fee:52, w:25), D(fee:34, w:15), F(fee:44, w:21), I(fee:48, w:23)
+Kendaraan di Luar Kapal (25):
+  a(fee:5, w:10), b(fee:20, w:10), e(fee:25, w:12), f(fee:40, w:18), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), w(fee:40, w:18), x(fee:30, w:14), y(fee:35, w:16), z(fee:38, w:17), A(fee:24, w:11), B(fee:16, w:8), E(fee:46, w:22), G(fee:26, w:13), H(fee:36, w:18)
+0 j j j j j 0 0 0 I I I I 0 0 0 0 D D D
+0 j j j j j 0 0 0 I I I I r r 0 0 D D D
+0 d d d d 0 0 0 0 I I I I r r 0 0 D D D
+0 d d d d 0 0 0 0 0 t t t r r 0 0 c c c
+0 0 0 0 0 0 0 0 0 0 t t t r r 0 0 c c c
+0 0 0 0 0 0 0 0 0 0 t t t r r 0 0 0 0 0
+0 0 q q q q q 0 0 0 t t t 0 C C C C 0 0
+0 0 q q q q q 0 0 0 0 0 0 0 C C C C 0 0
+0 0 0 0 0 F F F F F 0 0 0 0 C C C C 0 0
+0 0 0 0 0 F F F F F 0 0 0 0 0 0 0 0 0 0
+
+State Akhir (Fitness: 432.0, Durasi: 0.2902 detik):
+Kendaraan di Kapal S1 (11):
+  j(fee:45, w:20), l(fee:28, w:13), p(fee:33, w:15), q(fee:48, w:24), t(fee:55, w:26), w(fee:40, w:18), y(fee:35, w:16), z(fee:38, w:17), A(fee:24, w:11), C(fee:52, w:25), D(fee:34, w:15)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), d(fee:35, w:15), e(fee:25, w:12), f(fee:40, w:18), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), B(fee:16, w:8), E(fee:46, w:22), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18), I(fee:48, w:23)
+0 j j z z 0 0 0 0 p p p 0 0 0 0 0 D D D
+0 j j z z w w w w p p p 0 0 0 0 0 D D D
+0 j j z z w w w w p p p 0 0 0 0 0 D D D
+0 j j z z 0 0 0 0 0 t t t t 0 0 0 0 0 0
+0 j j 0 0 0 0 0 0 0 t t t t 0 0 0 A A A
+0 0 0 0 0 0 0 0 0 0 t t t t 0 0 0 A A A
+0 0 q q q q q 0 0 0 0 0 0 0 C C C C l l
+0 0 q q q q q 0 y y y 0 0 0 C C C C l l
+0 0 0 0 0 0 0 0 y y y 0 0 0 C C C C l l
+0 0 0 0 0 0 0 0 y y y 0 0 0 0 0 0 0 0 0
+--------------------------------------------------
+
+Eksperimen 2: Pop=20, Iter=100, Run=3
+State Awal (Fitness: 428.0):
+Kendaraan di Kapal S1 (10):
+  d(fee:35, w:15), f(fee:40, w:18), h(fee:50, w:25), j(fee:45, w:20), q(fee:48, w:24), t(fee:55, w:26), y(fee:35, w:16), z(fee:38, w:17), D(fee:34, w:15), I(fee:48, w:23)
+Kendaraan di Luar Kapal (25):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), w(fee:40, w:18), x(fee:30, w:14), A(fee:24, w:11), B(fee:16, w:8), C(fee:52, w:25), E(fee:46, w:22), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18)
+0 0 0 0 0 0 0 0 f f 0 0 0 0 0 0 z z z z
+0 0 0 0 0 0 0 0 f f 0 d d d d 0 z z z z
+0 t t t t 0 0 0 f f 0 d d d d y y y 0 0
+0 t t t t 0 0 0 f f 0 0 0 0 0 y y y 0 0
+0 t t t t D D D 0 0 0 0 0 0 0 y y y 0 0
+j j q q 0 D D D 0 0 0 0 I I I 0 0 0 0 0
+j j q q 0 D D D 0 0 0 0 I I I 0 0 0 0 0
+j j q q 0 0 0 0 0 0 0 0 I I I 0 0 0 0 0
+j j q q 0 0 0 0 0 0 0 0 I I I h h h h h
+j j q q 0 0 0 0 0 0 0 0 0 0 0 h h h h h
+
+State Akhir (Fitness: 434.0, Durasi: 0.3376 detik):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), f(fee:40, w:18), j(fee:45, w:20), q(fee:48, w:24), t(fee:55, w:26), w(fee:40, w:18), y(fee:35, w:16), z(fee:38, w:17), B(fee:16, w:8), D(fee:34, w:15), I(fee:48, w:23)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), A(fee:24, w:11), C(fee:52, w:25), E(fee:46, w:22), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18)
+B B 0 0 0 y y y f f 0 0 0 0 0 0 z z 0 0
+B B 0 0 0 y y y f f 0 d d 0 w w z z 0 0
+0 t t t t y y y f f 0 d d 0 w w z z 0 0
+0 t t t t 0 0 0 f f 0 d d 0 w w z z 0 0
+0 t t t t D D D 0 0 0 d d 0 w w 0 0 0 0
+j j q q 0 D D D 0 0 0 0 I I I I 0 0 0 0
+j j q q 0 D D D 0 0 0 0 I I I I 0 0 0 0
+j j q q 0 0 0 0 0 0 0 0 I I I I 0 0 0 0
+j j q q 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+j j q q 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+--------------------------------------------------
+
+Eksperimen 2: Pop=50, Iter=100, Run=1
+State Awal (Fitness: 426.0):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), f(fee:40, w:18), p(fee:33, w:15), q(fee:48, w:24), t(fee:55, w:26), v(fee:25, w:12), z(fee:38, w:17), A(fee:24, w:11), F(fee:44, w:21), H(fee:36, w:18), I(fee:48, w:23)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), j(fee:45, w:20), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), w(fee:40, w:18), x(fee:30, w:14), y(fee:35, w:16), B(fee:16, w:8), C(fee:52, w:25), D(fee:34, w:15), E(fee:46, w:22), G(fee:26, w:13)
+0 0 0 0 d d 0 0 0 0 0 0 0 0 0 0 A A z z
+p p p 0 d d 0 0 0 0 0 0 0 0 0 0 A A z z
+p p p 0 d d 0 H H H H 0 0 0 f f A A z z
+p p p 0 d d 0 H H H H 0 0 0 f f 0 0 z z
+0 0 0 0 t t t t 0 0 0 0 0 0 f f 0 q q 0
+0 F F 0 t t t t 0 0 0 v v v f f 0 q q 0
+0 F F 0 t t t t 0 0 0 v v v 0 0 0 q q 0
+0 F F 0 0 0 0 0 0 0 I I I I 0 0 0 q q 0
+0 F F 0 0 0 0 0 0 0 I I I I 0 0 0 q q 0
+0 F F 0 0 0 0 0 0 0 I I I I 0 0 0 0 0 0
+
+State Akhir (Fitness: 436.0, Durasi: 0.8664 detik):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), f(fee:40, w:18), j(fee:45, w:20), l(fee:28, w:13), t(fee:55, w:26), x(fee:30, w:14), y(fee:35, w:16), z(fee:38, w:17), C(fee:52, w:25), D(fee:34, w:15), F(fee:44, w:21)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), w(fee:40, w:18), A(fee:24, w:11), B(fee:16, w:8), E(fee:46, w:22), G(fee:26, w:13), H(fee:36, w:18), I(fee:48, w:23)
+d d l l 0 0 0 0 0 0 F F 0 0 0 0 0 0 0 0
+d d l l 0 0 0 0 0 0 F F 0 0 0 t t t 0 0
+d d l l 0 0 0 0 0 0 F F 0 0 0 t t t 0 0
+d d 0 0 0 0 0 0 0 0 F F 0 0 0 t t t 0 0
+0 0 0 0 0 0 0 0 x x F F 0 0 0 t t t z z
+0 D D D j j 0 0 x x 0 C C C 0 0 0 0 z z
+0 D D D j j 0 0 x x 0 C C C 0 0 0 0 z z
+0 D D D j j 0 0 y y y C C C 0 0 0 0 z z
+0 0 0 0 j j 0 0 y y y C C C f f f f 0 0
+0 0 0 0 j j 0 0 y y y 0 0 0 f f f f 0 0
+--------------------------------------------------
+
+Eksperimen 2: Pop=50, Iter=100, Run=2
+State Awal (Fitness: 426.0):
+Kendaraan di Kapal S1 (10):
+  f(fee:40, w:18), h(fee:50, w:25), j(fee:45, w:20), t(fee:55, w:26), w(fee:40, w:18), z(fee:38, w:17), B(fee:16, w:8), C(fee:52, w:25), E(fee:46, w:22), F(fee:44, w:21)
+Kendaraan di Luar Kapal (25):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), d(fee:35, w:15), e(fee:25, w:12), g(fee:15, w:8), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), y(fee:35, w:16), A(fee:24, w:11), D(fee:34, w:15), G(fee:26, w:13), H(fee:36, w:18), I(fee:48, w:23)
+0 0 0 0 B B 0 0 f f f f z z z z 0 0 0 0
+0 0 0 0 B B 0 0 f f f f z z z z 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 C C C w w 0 0 0 0 0
+0 0 0 0 0 F F F F F C C C w w E E E E E
+0 0 0 0 0 F F F F F C C C w w E E E E E
+0 0 0 h h 0 0 0 0 0 C C C w w 0 0 0 0 0
+0 0 0 h h t t t 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 h h t t t 0 0 0 0 0 j j j j j 0 0
+0 0 0 h h t t t 0 0 0 0 0 j j j j j 0 0
+0 0 0 h h t t t 0 0 0 0 0 0 0 0 0 0 0 0
+
+State Akhir (Fitness: 436.0, Durasi: 0.7487 detik):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), f(fee:40, w:18), j(fee:45, w:20), l(fee:28, w:13), t(fee:55, w:26), w(fee:40, w:18), y(fee:35, w:16), A(fee:24, w:11), C(fee:52, w:25), D(fee:34, w:15), I(fee:48, w:23)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), z(fee:38, w:17), B(fee:16, w:8), E(fee:46, w:22), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18)
+0 0 0 0 0 0 0 0 f f f f 0 w w w w 0 0 0
+0 0 0 0 0 0 0 0 f f f f 0 w w w w 0 0 0
+0 0 0 0 0 0 0 0 D D D 0 0 0 0 l l l j j
+0 0 0 0 d d 0 0 D D D 0 0 0 0 l l l j j
+0 0 0 0 d d 0 0 D D D 0 0 0 0 C C C j j
+0 0 0 0 d d 0 y y y 0 0 0 0 0 C C C j j
+I I I I d d 0 y y y 0 t t t 0 C C C j j
+I I I I 0 0 0 y y y 0 t t t 0 C C C 0 0
+I I I I 0 0 0 A A A 0 t t t 0 0 0 0 0 0
+0 0 0 0 0 0 0 A A A 0 t t t 0 0 0 0 0 0
+--------------------------------------------------
+
+Eksperimen 2: Pop=50, Iter=100, Run=3
+State Awal (Fitness: 425.0):
+Kendaraan di Kapal S1 (10):
+  d(fee:35, w:15), f(fee:40, w:18), h(fee:50, w:25), j(fee:45, w:20), q(fee:48, w:24), t(fee:55, w:26), w(fee:40, w:18), B(fee:16, w:8), C(fee:52, w:25), F(fee:44, w:21)
+Kendaraan di Luar Kapal (25):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), y(fee:35, w:16), z(fee:38, w:17), A(fee:24, w:11), D(fee:34, w:15), E(fee:46, w:22), G(fee:26, w:13), H(fee:36, w:18), I(fee:48, w:23)
+0 f f f f 0 0 q q q q q 0 0 0 j j 0 0 0
+0 f f f f 0 0 q q q q q 0 0 0 j j 0 0 0
+0 0 0 B B 0 0 0 0 0 0 0 0 0 0 j j C C C
+0 0 0 B B 0 F F 0 h h 0 0 0 0 j j C C C
+0 0 t t t 0 F F 0 h h 0 0 0 0 j j C C C
+0 0 t t t 0 F F 0 h h 0 w w w w 0 C C C
+0 0 t t t 0 F F 0 h h 0 w w w w 0 0 0 0
+0 0 t t t 0 F F 0 h h d d d d 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 d d d d 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+State Akhir (Fitness: 436.0, Durasi: 0.9612 detik):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), f(fee:40, w:18), j(fee:45, w:20), p(fee:33, w:15), t(fee:55, w:26), w(fee:40, w:18), z(fee:38, w:17), B(fee:16, w:8), C(fee:52, w:25), D(fee:34, w:15), I(fee:48, w:23)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), y(fee:35, w:16), A(fee:24, w:11), E(fee:46, w:22), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18)
+0 0 0 0 0 0 0 0 0 d d d d w w w w 0 0 0
+f f f f 0 I I I 0 d d d d w w w w 0 0 0
+f f f f 0 I I I 0 0 0 0 p p p 0 t t t 0
+0 0 0 0 0 I I I 0 0 0 0 p p p 0 t t t 0
+0 0 0 0 0 I I I C C C C p p p 0 t t t 0
+0 0 j j 0 0 B B C C C C 0 0 0 0 t t t 0
+0 0 j j 0 0 B B C C C C z z 0 0 0 0 0 0
+0 0 j j 0 0 0 0 0 0 0 0 z z 0 D D D 0 0
+0 0 j j 0 0 0 0 0 0 0 0 z z 0 D D D 0 0
+0 0 j j 0 0 0 0 0 0 0 0 z z 0 D D D 0 0
+--------------------------------------------------
+
+Eksperimen 2: Pop=100, Iter=100, Run=1
+State Awal (Fitness: 429.0):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), j(fee:45, w:20), l(fee:28, w:13), p(fee:33, w:15), r(fee:42, w:21), t(fee:55, w:26), w(fee:40, w:18), y(fee:35, w:16), B(fee:16, w:8), C(fee:52, w:25), I(fee:48, w:23)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), f(fee:40, w:18), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), q(fee:48, w:24), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), z(fee:38, w:17), A(fee:24, w:11), D(fee:34, w:15), E(fee:46, w:22), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18)
+0 0 0 0 0 0 0 0 0 0 y y y 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 y y y 0 l l 0 j j 0
+B B 0 0 0 0 t t t 0 y y y 0 l l 0 j j 0
+B B I I I I t t t 0 0 C C C l l 0 j j 0
+0 0 I I I I t t t 0 0 C C C 0 0 0 j j 0
+0 0 I I I I t t t 0 0 C C C 0 0 0 j j 0
+0 0 d d d d 0 0 p p p C C C 0 0 0 0 0 0
+0 0 d d d d 0 0 p p p 0 0 0 0 w w w w 0
+r r r r r 0 0 0 p p p 0 0 0 0 w w w w 0
+r r r r r 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+State Akhir (Fitness: 438.0, Durasi: 1.7820 detik):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), f(fee:40, w:18), j(fee:45, w:20), p(fee:33, w:15), t(fee:55, w:26), w(fee:40, w:18), z(fee:38, w:17), A(fee:24, w:11), D(fee:34, w:15), E(fee:46, w:22), I(fee:48, w:23)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), y(fee:35, w:16), B(fee:16, w:8), C(fee:52, w:25), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18)
+D D D 0 0 j j j j j 0 0 0 0 0 0 d d d d
+D D D 0 0 j j j j j f f f f 0 0 d d d d
+D D D 0 0 0 0 I I I f f f f 0 0 0 0 0 0
+0 0 0 t t t t I I I 0 0 0 0 0 0 0 0 0 0
+0 0 0 t t t t I I I 0 E E 0 0 A A 0 z z
+w w 0 t t t t I I I 0 E E 0 0 A A 0 z z
+w w 0 0 0 0 0 0 p p p E E 0 0 A A 0 z z
+w w 0 0 0 0 0 0 p p p E E 0 0 0 0 0 z z
+w w 0 0 0 0 0 0 p p p E E 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+--------------------------------------------------
+
+Eksperimen 2: Pop=100, Iter=100, Run=2
+State Awal (Fitness: 426.0):
+Kendaraan di Kapal S1 (10):
+  d(fee:35, w:15), h(fee:50, w:25), j(fee:45, w:20), l(fee:28, w:13), r(fee:42, w:21), t(fee:55, w:26), y(fee:35, w:16), z(fee:38, w:17), C(fee:52, w:25), E(fee:46, w:22)
+Kendaraan di Luar Kapal (25):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), f(fee:40, w:18), g(fee:15, w:8), i(fee:30, w:14), k(fee:5, w:11), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), q(fee:48, w:24), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), w(fee:40, w:18), x(fee:30, w:14), A(fee:24, w:11), B(fee:16, w:8), D(fee:34, w:15), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18), I(fee:48, w:23)
+0 0 0 0 z z z z 0 0 0 0 0 0 0 0 0 0 0 0
+j j 0 0 z z z z 0 0 0 0 0 l l l 0 0 E E
+j j 0 0 r r r r r 0 0 0 0 l l l 0 0 E E
+j j 0 0 r r r r r 0 0 0 0 0 0 d d 0 E E
+j j 0 0 0 0 0 0 0 0 0 0 0 0 0 d d 0 E E
+j j 0 0 0 0 0 0 0 0 0 0 0 0 0 d d 0 E E
+C C C 0 0 t t t 0 0 0 0 0 0 0 d d 0 0 0
+C C C 0 0 t t t h h h h h 0 0 y y y 0 0
+C C C 0 0 t t t h h h h h 0 0 y y y 0 0
+C C C 0 0 t t t 0 0 0 0 0 0 0 y y y 0 0
+
+State Akhir (Fitness: 438.0, Durasi: 1.6973 detik):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), f(fee:40, w:18), j(fee:45, w:20), t(fee:55, w:26), w(fee:40, w:18), y(fee:35, w:16), z(fee:38, w:17), A(fee:24, w:11), D(fee:34, w:15), F(fee:44, w:21), I(fee:48, w:23)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), B(fee:16, w:8), C(fee:52, w:25), E(fee:46, w:22), G(fee:26, w:13), H(fee:36, w:18)
+0 j j y y y w w 0 z z 0 0 0 0 0 A A A 0
+0 j j y y y w w 0 z z 0 0 0 0 0 A A A 0
+0 j j y y y w w 0 z z 0 F F F F F 0 0 0
+0 j j 0 0 0 w w 0 z z 0 F F F F F 0 0 0
+0 j j 0 0 0 0 0 0 D D D t t t t 0 0 d d
+0 0 0 0 I I I 0 0 D D D t t t t 0 0 d d
+0 0 0 0 I I I f f D D D t t t t 0 0 d d
+0 0 0 0 I I I f f 0 0 0 0 0 0 0 0 0 d d
+0 0 0 0 I I I f f 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 f f 0 0 0 0 0 0 0 0 0 0 0
+--------------------------------------------------
+
+Eksperimen 2: Pop=100, Iter=100, Run=3
+State Awal (Fitness: 427.0):
+Kendaraan di Kapal S1 (10):
+  d(fee:35, w:15), f(fee:40, w:18), j(fee:45, w:20), q(fee:48, w:24), t(fee:55, w:26), v(fee:25, w:12), y(fee:35, w:16), C(fee:52, w:25), F(fee:44, w:21), I(fee:48, w:23)
+Kendaraan di Luar Kapal (25):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), p(fee:33, w:15), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), w(fee:40, w:18), x(fee:30, w:14), z(fee:38, w:17), A(fee:24, w:11), B(fee:16, w:8), D(fee:34, w:15), E(fee:46, w:22), G(fee:26, w:13), H(fee:36, w:18)
+0 0 0 0 0 0 0 0 0 0 0 0 0 y y y 0 0 0 0
+0 0 0 0 0 0 0 q q 0 0 0 0 y y y t t t t
+v v v 0 0 0 0 q q 0 0 j j y y y t t t t
+v v v 0 0 0 0 q q 0 0 j j 0 0 0 t t t t
+0 0 0 0 0 0 0 q q 0 0 j j 0 0 f f 0 d d
+0 C C C C 0 0 q q 0 0 j j 0 0 f f 0 d d
+0 C C C C 0 0 0 I I I j j 0 0 f f 0 d d
+0 C C C C 0 0 0 I I I 0 0 0 0 f f 0 d d
+0 0 0 0 0 0 0 0 I I I F F F F F 0 0 0 0
+0 0 0 0 0 0 0 0 I I I F F F F F 0 0 0 0
+
+State Akhir (Fitness: 438.0, Durasi: 1.6478 detik):
+Kendaraan di Kapal S1 (11):
+  d(fee:35, w:15), f(fee:40, w:18), j(fee:45, w:20), p(fee:33, w:15), t(fee:55, w:26), w(fee:40, w:18), z(fee:38, w:17), A(fee:24, w:11), D(fee:34, w:15), E(fee:46, w:22), I(fee:48, w:23)
+Kendaraan di Luar Kapal (24):
+  a(fee:5, w:10), b(fee:20, w:10), c(fee:20, w:10), e(fee:25, w:12), g(fee:15, w:8), h(fee:50, w:25), i(fee:30, w:14), k(fee:5, w:11), l(fee:28, w:13), m(fee:2, w:17), n(fee:32, w:16), o(fee:3, w:9), q(fee:48, w:24), r(fee:42, w:21), s(fee:6, w:26), u(fee:15, w:8), v(fee:25, w:12), x(fee:30, w:14), y(fee:35, w:16), B(fee:16, w:8), C(fee:52, w:25), F(fee:44, w:21), G(fee:26, w:13), H(fee:36, w:18)
+f f z z z z 0 0 0 0 0 0 0 0 0 0 0 I I I
+f f z z z z 0 0 p p p w w w w 0 0 I I I
+f f E E E E E 0 p p p w w w w 0 0 I I I
+f f E E E E E 0 p p p 0 0 0 0 0 0 I I I
+d d t t t t 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+d d t t t t 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+d d t t t t 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+d d 0 A A A 0 0 j j j j j 0 0 0 D D D 0
+0 0 0 A A A 0 0 j j j j j 0 0 0 D D D 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 D D D 0
+--------------------------------------------------
+
