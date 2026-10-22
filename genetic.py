@@ -1,4 +1,5 @@
 import random
+import time
 from starter import Vehicle, list_vehicles
 
 class Individual:
@@ -8,17 +9,15 @@ class Individual:
         self.ship_l = ship_l
         self.max_capacity = max_capacity
         
-        # pemetaan gen: id kendaraan -> status penempatan
         self.genes = {}
         self.fitness = 0.0
         self.total_weight = 0
 
     def randomize(self):
-        # acak urutan mobil agar tiap individu punya urutan penempatan berbeda
-        shuffled_vehicles = list(self.vehicles)
-        random.shuffle(shuffled_vehicles)
+        # acak urutan mobil agar penataan tiap individu beda-beda
+        shuffled = list(self.vehicles)
+        random.shuffle(shuffled)
         
-        # grid sementara untuk memantau sel yang sudah terisi
         grid = []
         for _ in range(self.ship_w):
             baris = [0] * self.ship_l
@@ -26,9 +25,8 @@ class Individual:
             
         current_weight = 0
         
-        for v in shuffled_vehicles:
+        for v in shuffled:
             orientation = random.choice(["horizontal", "vertical"])
-            
             if orientation == "vertical":
                 w = v.w
                 l = v.l
@@ -37,14 +35,12 @@ class Individual:
                 l = v.w
             
             placed = False
-            
-            # cek apakah berat dan ukuran fisik masih muat di geladak
             if current_weight + v.weight <= self.max_capacity:
                 if w <= self.ship_w and l <= self.ship_l:
                     max_x = self.ship_w - w
                     max_y = self.ship_l - l
                     
-                    # coba maksimal 15 kali mencari koordinat kosong
+                    # coba cari koordinat acak sampai 15 kali untuk cari ruang kosong
                     for _ in range(15):
                         rx = random.randint(0, max_x)
                         ry = random.randint(0, max_y)
@@ -58,7 +54,6 @@ class Individual:
                             if overlap:
                                 break
                         
-                        # jika tidak menimpa mobil lain, letakkan mobil
                         if not overlap:
                             for r in range(w):
                                 for c in range(l):
@@ -74,7 +69,6 @@ class Individual:
                             placed = True
                             break
             
-            # jika tidak muat atau gagal cari ruang kosong, tandai di luar kapal
             if not placed:
                 self.genes[v.id] = {
                     "is_loaded": False,
@@ -83,10 +77,17 @@ class Individual:
                     "orientation": orientation
                 }
                 
-        self.evaluate()
+        self.total_weight = current_weight
+        total_fee = 0.0
+        for vid, g in self.genes.items():
+            if g["is_loaded"]:
+                for v in self.vehicles:
+                    if v.id == vid:
+                        total_fee = total_fee + v.shipping_fee
+                        break
+        self.fitness = total_fee
 
     def evaluate(self):
-        # bersihkan grid untuk validasi ulang dan hitung fitness
         grid = []
         for _ in range(self.ship_w):
             baris = [0] * self.ship_l
@@ -95,13 +96,18 @@ class Individual:
         total_fee = 0.0
         current_weight = 0
 
+        # prioritaskan mobil fee mahal masuk duluan jika ada tabrakan sel
+        candidate_vehicles = []
         for v in self.vehicles:
             gene = self.genes.get(v.id)
-            if gene is None:
-                continue
-            if not gene["is_loaded"]:
-                continue
+            if gene is not None:
+                if gene["is_loaded"]:
+                    candidate_vehicles.append(v)
+                    
+        candidate_vehicles.sort(key=lambda item: item.shipping_fee, reverse=True)
 
+        for v in candidate_vehicles:
+            gene = self.genes[v.id]
             orientation = gene["orientation"]
             if orientation == "vertical":
                 w = v.w
@@ -113,7 +119,6 @@ class Individual:
             x = gene["x"]
             y = gene["y"]
 
-            # batalkan penempatan jika koordinat keluar dari batas kapal
             if x < 0 or y < 0:
                 gene["is_loaded"] = False
                 continue
@@ -121,12 +126,10 @@ class Individual:
                 gene["is_loaded"] = False
                 continue
 
-            # batalkan penempatan jika beban melebihi kapasitas maksimum
             if current_weight + v.weight > self.max_capacity:
                 gene["is_loaded"] = False
                 continue
 
-            # periksa apakah menimpa kendaraan lain yang sudah valid
             overlap = False
             for r in range(w):
                 for c in range(l):
@@ -150,7 +153,6 @@ class Individual:
         return self.fitness
 
     def clone(self):
-        # salin objek dan nilai gen secara mandiri agar tidak saling merusak state
         new_ind = Individual(self.vehicles, self.ship_w, self.ship_l, self.max_capacity)
         for vid, state in self.genes.items():
             new_ind.genes[vid] = {
@@ -163,7 +165,7 @@ class Individual:
         new_ind.total_weight = self.total_weight
         return new_ind
 
-    def display(self):
+    def get_grid(self):
         grid = []
         for _ in range(self.ship_w):
             baris = ["0"] * self.ship_l
@@ -182,22 +184,20 @@ class Individual:
                     for r in range(w):
                         for c in range(l):
                             grid[gene["x"] + r][gene["y"] + c] = v.id
-                        
+        return grid
+
+    def display(self):
+        grid = self.get_grid()
         print(f"Total Fitness: {self.fitness}")
         print(f"Total Weight : {self.total_weight}/{self.max_capacity}")
         for row in grid:
             print(" ".join(row))
 
 
-# ==========================================
-# BATCH 2: OPERATOR GENETIK
-# ==========================================
-
 def tournament_selection(population, k=3):
-    # ambil k kandidat acak dari populasi
-    candidates = random.sample(population, k)
+    k_actual = min(k, len(population))
+    candidates = random.sample(population, k_actual)
     
-    # cari kandidat dengan fitness tertinggi di antara k peserta
     best_candidate = candidates[0]
     for ind in candidates:
         if ind.fitness > best_candidate.fitness:
@@ -207,13 +207,12 @@ def tournament_selection(population, k=3):
 
 
 def crossover(parent1, parent2, crossover_rate=0.8):
-    # jika tidak lolos probabilitas kawin, anak mengkloning parent1
     if random.random() > crossover_rate:
         return parent1.clone()
 
     child = Individual(parent1.vehicles, parent1.ship_w, parent1.ship_l, parent1.max_capacity)
     
-    # kombinasikan gen: peluang 50% dari parent1, 50% dari parent2
+    # peluang 50:50 ambil gen dari parent1 atau parent2
     for v in parent1.vehicles:
         if random.random() < 0.5:
             source_gene = parent1.genes[v.id]
@@ -227,17 +226,13 @@ def crossover(parent1, parent2, crossover_rate=0.8):
             "orientation": source_gene["orientation"]
         }
 
-    # reparasi otomatis jika ada mobil yang bertabrakan dari gabungan kedua orang tua
-    child.evaluate()
     return child
 
 
 def mutate(individual, mutation_rate=0.2):
-    # jika tidak lolos probabilitas mutasi, lewati
     if random.random() > mutation_rate:
         return
 
-    # kumpulkan daftar mobil yang saat ini di dalam dan di luar kapal
     loaded_ids = []
     unloaded_ids = []
     for vid, state in individual.genes.items():
@@ -246,80 +241,178 @@ def mutate(individual, mutation_rate=0.2):
         else:
             unloaded_ids.append(vid)
 
-    # pilih salah satu dari 3 aksi mutasi yang sesuai spesifikasi
-    mutation_type = random.randint(1, 3)
+    v_map = {}
+    for v in individual.vehicles:
+        v_map[v.id] = v
+
+    mutation_type = random.randint(1, 4)
 
     if mutation_type == 1 and len(loaded_ids) > 0:
-        # aksi 1: geser koordinat mobil di dalam kapal ke posisi acak baru
+        # geser koordinat mobil di kapal
         target_id = random.choice(loaded_ids)
-        individual.genes[target_id]["x"] = random.randint(0, individual.ship_w - 1)
-        individual.genes[target_id]["y"] = random.randint(0, individual.ship_l - 1)
+        v = v_map[target_id]
+        orientation = individual.genes[target_id]["orientation"]
+        if orientation == "vertical":
+            w = v.w
+            l = v.l
+        else:
+            w = v.l
+            l = v.w
+            
+        max_x = individual.ship_w - w
+        max_y = individual.ship_l - l
+        if max_x >= 0 and max_y >= 0:
+            individual.genes[target_id]["x"] = random.randint(0, max_x)
+            individual.genes[target_id]["y"] = random.randint(0, max_y)
 
     elif mutation_type == 2 and len(loaded_ids) > 0:
-        # aksi 2: putar orientasi mobil
+        # putar orientasi mobil horizontal <-> vertical
         target_id = random.choice(loaded_ids)
+        v = v_map[target_id]
         current_orient = individual.genes[target_id]["orientation"]
         if current_orient == "vertical":
-            individual.genes[target_id]["orientation"] = "horizontal"
+            new_orient = "horizontal"
+            new_w = v.l
+            new_l = v.w
         else:
-            individual.genes[target_id]["orientation"] = "vertical"
+            new_orient = "vertical"
+            new_w = v.w
+            new_l = v.l
+            
+        max_x = individual.ship_w - new_w
+        max_y = individual.ship_l - new_l
+        if max_x >= 0 and max_y >= 0:
+            individual.genes[target_id]["orientation"] = new_orient
+            cur_x = individual.genes[target_id]["x"]
+            cur_y = individual.genes[target_id]["y"]
+            if cur_x > max_x:
+                individual.genes[target_id]["x"] = max_x
+            if cur_y > max_y:
+                individual.genes[target_id]["y"] = max_y
 
     elif mutation_type == 3 and len(unloaded_ids) > 0:
-        # aksi 3: coba masukkan mobil dari luar kapal ke posisi acak
+        # coba naikin mobil dari luar kapal
         target_id = random.choice(unloaded_ids)
-        individual.genes[target_id]["is_loaded"] = True
-        individual.genes[target_id]["x"] = random.randint(0, individual.ship_w - 1)
-        individual.genes[target_id]["y"] = random.randint(0, individual.ship_l - 1)
+        v = v_map[target_id]
+        orientation = random.choice(["horizontal", "vertical"])
+        if orientation == "vertical":
+            w = v.w
+            l = v.l
+        else:
+            w = v.l
+            l = v.w
+            
+        max_x = individual.ship_w - w
+        max_y = individual.ship_l - l
+        if max_x >= 0 and max_y >= 0:
+            individual.genes[target_id]["is_loaded"] = True
+            individual.genes[target_id]["orientation"] = orientation
+            individual.genes[target_id]["x"] = random.randint(0, max_x)
+            individual.genes[target_id]["y"] = random.randint(0, max_y)
 
-    # validasi dan reparasi ulang setelah mengalami mutasi
-    individual.evaluate()
+    elif mutation_type == 4 and len(loaded_ids) > 0 and len(unloaded_ids) > 0:
+        # tukar posisi mobil dalam kapal dengan mobil di luar kapal
+        in_id = random.choice(loaded_ids)
+        out_id = random.choice(unloaded_ids)
+        old_x = individual.genes[in_id]["x"]
+        old_y = individual.genes[in_id]["y"]
+        orient = individual.genes[in_id]["orientation"]
+        
+        individual.genes[in_id]["is_loaded"] = False
+        individual.genes[in_id]["x"] = -1
+        individual.genes[in_id]["y"] = -1
+        
+        v_out = v_map[out_id]
+        if orient == "vertical":
+            w = v_out.w
+            l = v_out.l
+        else:
+            w = v_out.l
+            l = v_out.w
+        if (old_x + w) <= individual.ship_w and (old_y + l) <= individual.ship_l:
+            individual.genes[out_id]["is_loaded"] = True
+            individual.genes[out_id]["x"] = old_x
+            individual.genes[out_id]["y"] = old_y
+            individual.genes[out_id]["orientation"] = orient
 
 
 def get_elites(population, elite_count=2):
-    # urutkan populasi dari fitness tertinggi ke terendah secara manual
+    count = min(elite_count, len(population))
     sorted_pop = list(population)
     sorted_pop.sort(key=lambda ind: ind.fitness, reverse=True)
     
+    # simpan individu terbaik agar solusinya tidak hilang pas evolusi
     elites = []
-    for i in range(elite_count):
+    for i in range(count):
         elites.append(sorted_pop[i].clone())
         
     return elites
 
 
-if __name__ == "__main__":
-    print("=== PENGUJIAN BATCH 2: OPERATOR GENETIK ===")
+def run_genetic_algorithm(vehicles, ship_w, ship_l, max_capacity, pop_size=50, generations=100, crossover_rate=0.8, mutation_rate=0.2, elite_count=2):
+    start_time = time.time()
     
-    # 1. Uji Buat Populasi Mini
-    pop = []
-    for _ in range(5):
-        ind = Individual(list_vehicles, ship_w=10, ship_l=20, max_capacity=200)
+    population = []
+    for _ in range(pop_size):
+        ind = Individual(vehicles, ship_w, ship_l, max_capacity)
         ind.randomize()
-        pop.append(ind)
-    print(f"Berhasil membuat populasi mini: {len(pop)} individu")
-    for i, ind in enumerate(pop):
-        print(f"Individu {i+1} Fitness: {ind.fitness}")
-
-    # 2. Uji Tournament Selection
-    parent1 = tournament_selection(pop, k=3)
-    parent2 = tournament_selection(pop, k=3)
-    print(f"\nParent 1 terpilih: Fitness {parent1.fitness}")
-    print(f"Parent 2 terpilih: Fitness {parent2.fitness}")
-
-    # 3. Uji Crossover
-    child = crossover(parent1, parent2, crossover_rate=1.0)
-    print(f"\nAnak hasil persilangan: Fitness {child.fitness}, Berat {child.total_weight}/{child.max_capacity}")
-    assert child.total_weight <= child.max_capacity, "Error: Berat anak melebihi kapasitas!"
-
-    # 4. Uji Mutasi
-    print("\nSebelum mutasi, Fitness:", child.fitness)
-    mutate(child, mutation_rate=1.0) # paksa mutasi 100%
-    print("Setelah mutasi, Fitness:", child.fitness)
-    assert child.total_weight <= child.max_capacity, "Error: Berat setelah mutasi melebihi kapasitas!"
-
-    # 5. Uji Elitisme
-    elites = get_elites(pop, elite_count=2)
-    print(f"\n2 Elite terbaik: Fitness {elites[0].fitness} dan {elites[1].fitness}")
-    assert elites[0].fitness >= elites[1].fitness, "Error: Urutan elit tidak sesuai!"
+        population.append(ind)
+        
+    population.sort(key=lambda ind: ind.fitness, reverse=True)
+    initial_state = population[0].clone()
     
-    print("\nSemua pengujian Batch 2 berhasil dan valid!")
+    history_max = []
+    history_avg = []
+    
+    for _ in range(generations):
+        # rekap fitness max dan rata-rata generasi ini untuk data grafik
+        current_max = population[0].fitness
+        total_fitness = 0.0
+        for ind in population:
+            total_fitness = total_fitness + ind.fitness
+            if ind.fitness > current_max:
+                current_max = ind.fitness
+                
+        current_avg = total_fitness / len(population)
+        history_max.append(current_max)
+        history_avg.append(current_avg)
+        
+        new_population = get_elites(population, elite_count)
+        
+        while len(new_population) < pop_size:
+            parent1 = tournament_selection(population, k=3)
+            parent2 = tournament_selection(population, k=3)
+            
+            child = crossover(parent1, parent2, crossover_rate)
+            mutate(child, mutation_rate)
+            child.evaluate()
+            new_population.append(child)
+            
+        population = new_population
+        population.sort(key=lambda ind: ind.fitness, reverse=True)
+        
+    duration = time.time() - start_time
+    final_state = population[0].clone()
+    
+    return {
+        "initial_state": initial_state,
+        "final_state": final_state,
+        "best_fitness": final_state.fitness,
+        "duration": duration,
+        "history_max": history_max,
+        "history_avg": history_avg,
+        "pop_size": pop_size,
+        "generations": generations
+    }
+
+
+if __name__ == "__main__":
+    print("Pengujian Algoritma Genetik (Single Run)")
+    hasil = run_genetic_algorithm(list_vehicles, ship_w=10, ship_l=20, max_capacity=200, pop_size=40, generations=30)
+    
+    print(f"Durasi Pencarian: {hasil['duration']:.2f} detik")
+    print(f"Fitness Awal    : {hasil['initial_state'].fitness}")
+    print(f"Fitness Akhir   : {hasil['best_fitness']}")
+    
+    print("\nPenataan Geladak Final:")
+    hasil["final_state"].display()
