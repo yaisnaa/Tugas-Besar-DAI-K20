@@ -11,20 +11,24 @@ import copy
 # ukuran ship juga akan di randomize dengan ukuran yang sudah ada (50x50, 50x25, dll) atau bisa di assign sendiri
 def get_neighbor(armada:Armada):
     neighbor = copy.deepcopy(armada)
-    gerakan = rd.choice(["switch", "move", "rotate"])
-    if gerakan == "switch":
-        neighbor.switch_vehicle_success()
-    else:
-        ship = rd.choice(list(neighbor.ship_list))
-        if ship.list_vehicles_in_ship:
-            vehicle = rd.choice(list(ship.list_vehicles_in_ship))
-            if gerakan == "move": 
-                ship.move_vehicle_success(vehicle)
-            else:
-                ship.change_orientation_success(vehicle)
-    return neighbor
+
+    while True:
+        gerakan = rd.choice(["switch", "move", "rotate"])
+        if gerakan == "switch":
+                if neighbor.switch_vehicle_success():
+                    return neighbor
+        else:
+            ship = rd.choice(list(neighbor.ship_list))
+            if ship.list_vehicles_in_ship:
+                vehicle = rd.choice(list(ship.list_vehicles_in_ship))
+                if gerakan == "move": 
+                    if ship.move_vehicle_success(vehicle):
+                        return neighbor
+                else:
+                    if ship.change_orientation_success(vehicle):
+                        return neighbor
     
-def hill_climbing(armada, max_sideways=0, n_neighbors=50, on_iteration = None):
+def hill_climbing(armada, max_sideways=0, n_neighbors=50, on_iteration = None, stochastic = False):
     fee_sekarang = armada.calculate_armada_shipping_fee()
     sideways = 0
     history = [fee_sekarang]
@@ -34,10 +38,13 @@ def hill_climbing(armada, max_sideways=0, n_neighbors=50, on_iteration = None):
     while True:
         fee_terbaik = -1
         kandidat = []
+        kandidat_better = []
 
         for _ in range(n_neighbors):
             tetangga = get_neighbor(armada)
             f = tetangga.calculate_armada_shipping_fee()
+            if f>fee_sekarang:
+                kandidat_better.append((f,tetangga))
             if f > fee_terbaik:
                 fee_terbaik = f
                 kandidat = [tetangga]
@@ -45,8 +52,11 @@ def hill_climbing(armada, max_sideways=0, n_neighbors=50, on_iteration = None):
                 kandidat.append(tetangga)
 
         if fee_terbaik > fee_sekarang:
-            armada = rd.choice(kandidat)
-            fee_sekarang = fee_terbaik
+            if stochastic:
+                fee_sekarang,armada = rd.choice(kandidat_better)
+            else:
+                armada = rd.choice(kandidat)
+                fee_sekarang = fee_terbaik
             sideways = 0
         elif fee_terbaik == fee_sekarang and sideways <  max_sideways:
             armada = rd.choice(kandidat)
@@ -70,12 +80,14 @@ def new_random_armada(armada):
     fresh.random_state_armada(vehicles)
     return fresh
 
-def random_restart(armada, max_sideways = 0, n_neighbor = 50, max_restart=100, on_iteration = None):
-    best,best_fee,best_history = hill_climbing(armada, max_sideways, n_neighbor, on_iteration)
+def random_restart(armada, max_sideways = 0, n_neighbor = 50, max_restart=100, on_iteration = None, stochastic=False):
+    best,best_fee,best_history = hill_climbing(armada, max_sideways, n_neighbor, on_iteration, stochastic)
     for _ in range(max_restart):
-        hasil, fee, history = hill_climbing(new_random_armada(armada), max_sideways, n_neighbor, on_iteration)
+        hasil, fee, history = hill_climbing(new_random_armada(armada), max_sideways, n_neighbor, on_iteration, stochastic)
         if fee > best_fee:
             best_fee = fee
             best = hasil
             best_history = history
     return best, best_fee, best_history
+
+
