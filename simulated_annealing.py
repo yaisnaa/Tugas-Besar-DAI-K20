@@ -11,6 +11,7 @@ class simulated_annealing:
 
   
     def __init__(self, armada: Armada, T: float, cooling_rate: float):
+        self.armada_awal = copy.deepcopy(armada)
         self.armada = copy.deepcopy(armada)
         self.T = T  
         self.cooling_rate = cooling_rate
