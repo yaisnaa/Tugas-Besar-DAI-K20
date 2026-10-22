@@ -14,7 +14,7 @@ class Vehicle:
             self.coor = [-1, -1]
         else:
             self.coor = [coor[0], coor[1]]
-    
+
     def __str__(self) -> str:
         return f"{self.id}"
 
@@ -130,10 +130,8 @@ class Ship:
         original_orientation = vehicle.orientation
         x_coor = vehicle.coor[0]
         y_coor = vehicle.coor[1]
-
         self.remove_vehicle_success(vehicle)
-
-        vehicle.orientation = "vertical" if original_orientation == "horizontal" else "horizontal"
+        vehicle.orientation = "vertical" if vehicle.orientation == "horizontal" else "horizontal"
 
         if self.inputing_vehicle_success(vehicle, x_coor, y_coor):
             return True
@@ -159,7 +157,7 @@ class Ship:
         self.inputing_vehicle_success(vehicle, old_x, old_y)
         return False
 
-    def switch_vehicles_success(self, vehicle_a: Vehicle, vehicle_b: Vehicle) -> bool:
+    def switch_vehicles_success(self, vehicle_a: Vehicle, vehicle_b: Vehicle) -> bool: 
         in_a = vehicle_a in self.list_vehicles_in_ship
         in_b = vehicle_b in self.list_vehicles_in_ship
         
@@ -247,10 +245,6 @@ class Armada:
         ok_a = (ship_b is None) or ship_b.inputing_vehicle_success(vehicle_a, *coor_b)
         ok_b = ok_a and ((ship_a is None) or ship_a.inputing_vehicle_success(vehicle_b, *coor_a))
         if ok_a and ok_b:
-            origin_a = f"ship {ship_a.id}" if ship_a else "luar"
-            origin_b = f"ship {ship_b.id}" if ship_b else "luar"
-            print(f"kendaraan 1: {vehicle_a} dari: {origin_a}")
-            print(f"kendaraan 2: {vehicle_b} dari: {origin_b}")
             return True
 
         # gagal -> rollback
@@ -264,80 +258,26 @@ class Armada:
             ship_b.inputing_vehicle_success(vehicle_b, *coor_b)
         return False
     
+def generate_armada(n_vehicles=30, n_ships=2,
+                    ship_w=(8, 12), ship_l=(15, 25), capacity=(150, 250),
+                    vehicle_w=(2, 5), vehicle_l=(2, 5),
+                    fee=(5, 60), weight=(8, 26), eta=(7, 15)) -> Armada:
+    ships = [Ship(w=random.randint(*ship_w), l=random.randint(*ship_l),
+                  max_capacity=random.randint(*capacity), id=f"S{i}")
+             for i in range(1, n_ships + 1)]
+    vehicles = [Vehicle(id=f"V{i}", w=random.randint(*vehicle_w), l=random.randint(*vehicle_l),
+                        shipping_fee=random.randint(*fee), weight=random.randint(*weight),
+                        eta=random.randint(*eta),
+                        orientation=random.choice(["vertical", "horizontal"]))
+                for i in range(1, n_vehicles + 1)]
+    armada = Armada(set(ships), vehicles)
+    armada.random_state_armada(vehicles)
+    return armada
 
 
-ship1 = Ship(w=10, l=20, max_capacity=200, id="f")
-ship2 = Ship(w=10, l=20, max_capacity=200, id="d")
-
-list_vehicles = [
-    Vehicle(id="a", w=3, l=2, orientation="horizontal", shipping_fee=5, weight=10, eta=10),
-    Vehicle(id="b", w=3, l=2, orientation="vertical", shipping_fee=20, weight=10, eta=10),
-    Vehicle(id="c", w=3, l=2, orientation="horizontal", shipping_fee=20, weight=10, eta=10),
-    Vehicle(id="d", w=2, l=4, orientation="vertical", shipping_fee=35, weight=15, eta=12),
-    Vehicle(id="e", w=2, l=3, orientation="horizontal", shipping_fee=25, weight=12, eta=14),
-    Vehicle(id="f", w=4, l=2, orientation="horizontal", shipping_fee=40, weight=18, eta=8),
-    Vehicle(id="g", w=2, l=2, orientation="vertical", shipping_fee=15, weight=8, eta=15),
-    Vehicle(id="h", w=5, l=2, orientation="horizontal", shipping_fee=50, weight=25, eta=9),
-    Vehicle(id="i", w=3, l=3, orientation="vertical", shipping_fee=30, weight=14, eta=11),
-    Vehicle(id="j", w=2, l=5, orientation="vertical", shipping_fee=45, weight=20, eta=13),
-    Vehicle(id="k", w=3, l=2, orientation="horizontal", shipping_fee=5, weight=11, eta=10),
-    Vehicle(id="l", w=2, l=3, orientation="vertical", shipping_fee=28, weight=13, eta=12),
-    Vehicle(id="m", w=4, l=2, orientation="horizontal", shipping_fee=2, weight=17, eta=8),
-    Vehicle(id="n", w=2, l=4, orientation="vertical", shipping_fee=32, weight=16, eta=9),
-    Vehicle(id="o", w=2, l=2, orientation="horizontal", shipping_fee=3, weight=9, eta=14),
-    Vehicle(id="p", w=3, l=3, orientation="vertical", shipping_fee=33, weight=15, eta=11),
-    Vehicle(id="q", w=5, l=2, orientation="horizontal", shipping_fee=48, weight=24, eta=7),
-    Vehicle(id="r", w=2, l=5, orientation="vertical", shipping_fee=42, weight=21, eta=13),
-    Vehicle(id="s", w=4, l=3, orientation="horizontal", shipping_fee=6, weight=26, eta=10),
-    Vehicle(id="t", w=3, l=4, orientation="vertical", shipping_fee=55, weight=26, eta=15),
-    Vehicle(id="u", w=2, l=2, orientation="horizontal", shipping_fee=15, weight=8, eta=12),
-    Vehicle(id="v", w=3, l=2, orientation="vertical", shipping_fee=25, weight=12, eta=14),
-    Vehicle(id="w", w=4, l=2, orientation="horizontal", shipping_fee=40, weight=18, eta=9),
-    Vehicle(id="x", w=2, l=3, orientation="vertical", shipping_fee=30, weight=14, eta=11),
-    Vehicle(id="y", w=3, l=3, orientation="horizontal", shipping_fee=35, weight=16, eta=10),
-    Vehicle(id="z", w=2, l=4, orientation="vertical", shipping_fee=38, weight=17, eta=12),
-    Vehicle(id="A", w=3, l=2, orientation="horizontal", shipping_fee=24, weight=11, eta=11),
-    Vehicle(id="B", w=2, l=2, orientation="vertical", shipping_fee=16, weight=8, eta=14),
-    Vehicle(id="C", w=4, l=3, orientation="horizontal", shipping_fee=52, weight=25, eta=9),
-    Vehicle(id="D", w=3, l=3, orientation="vertical", shipping_fee=34, weight=15, eta=13),
-    Vehicle(id="E", w=5, l=2, orientation="horizontal", shipping_fee=46, weight=22, eta=8),
-    Vehicle(id="F", w=2, l=5, orientation="vertical", shipping_fee=44, weight=21, eta=12),
-    Vehicle(id="G", w=2, l=3, orientation="horizontal", shipping_fee=26, weight=13, eta=15),
-    Vehicle(id="H", w=4, l=2, orientation="vertical", shipping_fee=36, weight=18, eta=10),
-    Vehicle(id="I", w=3, l=4, orientation="horizontal", shipping_fee=48, weight=23, eta=11),
-]
-
-all_vehicles = list(list_vehicles)
-unplaced_after_ship1 = ship1.random_state_ship(all_vehicles)
-unplaced_after_ship2 = ship2.random_state_ship(unplaced_after_ship1)
-
-ship_list = {ship1, ship2}
-
-# print("=== SHIP 1 ===")
-# ship1.display()
-# print("Shipping Fee:", ship1.calculate_shipping_fee())
-# print("Ship Weight:", ship1.calculate_ship_weight())
-
-# print("\n=== SHIP 2 ===")
-# ship2.display()
-# print("Shipping Fee:", ship2.calculate_shipping_fee())
-# print("Ship Weight:", ship2.calculate_ship_weight())
-
-# print("\nUnplaced Vehicles:", unplaced_after_ship2)
-
-armada1 = Armada(ship_list, all_vehicles)
-# print("\nTotal Armada Shipping Fee:", armada1.calculate_armada_shipping_fee())
-
-# print("\nMencoba swap kendaraan di armada...")
-# for i in range(100):
-#     if armada1.switch_vehicle_success():
-#         break
-
-# print("\nSetelah Swap:")
-# print("=== SHIP 1 ===")
-# ship1.display()
-# print("\n=== SHIP 2 ===")
-# ship2.display()
-
-# matriks mash bisa overlapp kalo lebih harusnya gagal input
-# coordinat sistemnya masih array meaning x = vertikal y = horizontal
+if __name__ == "__main__":
+    armada = generate_armada()
+    for ship in armada.ship_list:
+        print(f"=== SHIP {ship.id} ===")
+        ship.display()
+    print("Total fee:", armada.calculate_armada_shipping_fee())
