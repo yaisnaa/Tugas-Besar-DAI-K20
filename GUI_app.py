@@ -99,6 +99,9 @@ class App(tk.Tk):
             return
         self.running = True
         self.run_btn.config(state="disabled")
+        self.t0 = time.perf_counter()
+        self.slept = 0.0
+
         threading.Thread(target=self._worker, args=(sideways, neighbors, restarts), daemon=True).start()
         self.after(30, self._poll)
 
@@ -107,6 +110,8 @@ class App(tk.Tk):
             self.q.put(("progress", it, fee, armada))
             if self.delay_ms:
                 time.sleep(self.delay_ms / 1000)
+                self.slept += self.delay_ms / 1000
+
 
         try:
             if restarts > 0:
@@ -128,20 +133,25 @@ class App(tk.Tk):
                 it, fee, armada = data
                 self._log_iteration(it, fee)
                 last = (it, fee, armada)
-            elif kind == "done":
-                armada, fee, history = data[0]
-                self.render(armada)
-                self.status.set(f"Selesai | fee {history[0]} -> {fee}")
-                self.write(f"Selesai: fee {history[0]} -> {fee} ({len(history) - 1} iterasi)")
-                self._finish()
-                return
             elif kind == "error":
                 messagebox.showerror("Error", data[0])
                 self._finish()
                 return
+            elif kind == "done":
+                armada, fee, history = data[0]
+                elapsed = time.perf_counter() - self.t0 - self.slept
+                self.render(armada)
+                self.status.set(f"Selesai | fee {history[0]} -> {fee} | {elapsed:.2f} s")
+                self.write(f"Selesai: fee {history[0]} -> {fee} ({len(history) - 1} iterasi), "
+                           f"waktu {elapsed:.2f} s (di luar jeda)")
+                self._finish()
+                return
+
+            
+
         if last:  # delay kecil bikin banyak iterasi menumpuk; gambar yang terbaru saja
             it, fee, armada = last
-            self.status.set(f"Iterasi {it} | fee {fee}")
+            self.status.set(f"Iterasi {it} | fee {fee} | {time.perf_counter() - self.t0 - self.slept:.1f} s")
             self.render(armada)
         self.after(30, self._poll)
 
