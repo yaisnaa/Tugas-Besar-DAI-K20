@@ -257,7 +257,7 @@ class Armada:
         if ship_b:
             ship_b.inputing_vehicle_success(vehicle_b, *coor_b)
         return False
-
+    
 def generate_armada(n_vehicles=30, n_ships=2,
                     ship_w=(8, 12), ship_l=(15, 25), capacity=(150, 250),
                     vehicle_w=(2, 5), vehicle_l=(2, 5),
@@ -275,46 +275,9 @@ def generate_armada(n_vehicles=30, n_ships=2,
     return armada
 
 
-ship1 = Ship(w=10, l=20, max_capacity=200, id="f")
-ship2 = Ship(w=10, l=20, max_capacity=200, id="d")
-
-list_vehicles = [
-    Vehicle(id="a", w=3, l=2, orientation="horizontal", shipping_fee=5, weight=10, eta=10),
-    Vehicle(id="b", w=3, l=2, orientation="vertical", shipping_fee=20, weight=10, eta=10),
-    Vehicle(id="c", w=3, l=2, orientation="horizontal", shipping_fee=20, weight=10, eta=10),
-    Vehicle(id="d", w=2, l=4, orientation="vertical", shipping_fee=35, weight=15, eta=12),
-    Vehicle(id="e", w=2, l=3, orientation="horizontal", shipping_fee=25, weight=12, eta=14),
-    Vehicle(id="f", w=4, l=2, orientation="horizontal", shipping_fee=40, weight=18, eta=8),
-    Vehicle(id="g", w=2, l=2, orientation="vertical", shipping_fee=15, weight=8, eta=15),
-    Vehicle(id="h", w=5, l=2, orientation="horizontal", shipping_fee=50, weight=25, eta=9),
-    Vehicle(id="i", w=3, l=3, orientation="vertical", shipping_fee=30, weight=14, eta=11),
-    Vehicle(id="j", w=2, l=5, orientation="vertical", shipping_fee=45, weight=20, eta=13),
-    Vehicle(id="k", w=3, l=2, orientation="horizontal", shipping_fee=5, weight=11, eta=10),
-    Vehicle(id="l", w=2, l=3, orientation="vertical", shipping_fee=28, weight=13, eta=12),
-    Vehicle(id="m", w=4, l=2, orientation="horizontal", shipping_fee=2, weight=17, eta=8),
-    Vehicle(id="n", w=2, l=4, orientation="vertical", shipping_fee=32, weight=16, eta=9),
-    Vehicle(id="o", w=2, l=2, orientation="horizontal", shipping_fee=3, weight=9, eta=14),
-    Vehicle(id="p", w=3, l=3, orientation="vertical", shipping_fee=33, weight=15, eta=11),
-    Vehicle(id="q", w=5, l=2, orientation="horizontal", shipping_fee=48, weight=24, eta=7),
-    Vehicle(id="r", w=2, l=5, orientation="vertical", shipping_fee=42, weight=21, eta=13),
-    Vehicle(id="s", w=4, l=3, orientation="horizontal", shipping_fee=6, weight=26, eta=10),
-    Vehicle(id="t", w=3, l=4, orientation="vertical", shipping_fee=55, weight=26, eta=15),
-    Vehicle(id="u", w=2, l=2, orientation="horizontal", shipping_fee=15, weight=8, eta=12),
-    Vehicle(id="v", w=3, l=2, orientation="vertical", shipping_fee=25, weight=12, eta=14),
-    Vehicle(id="w", w=4, l=2, orientation="horizontal", shipping_fee=40, weight=18, eta=9),
-    Vehicle(id="x", w=2, l=3, orientation="vertical", shipping_fee=30, weight=14, eta=11),
-    Vehicle(id="y", w=3, l=3, orientation="horizontal", shipping_fee=35, weight=16, eta=10),
-    Vehicle(id="z", w=2, l=4, orientation="vertical", shipping_fee=38, weight=17, eta=12),
-    Vehicle(id="A", w=3, l=2, orientation="horizontal", shipping_fee=24, weight=11, eta=11),
-    Vehicle(id="B", w=2, l=2, orientation="vertical", shipping_fee=16, weight=8, eta=14),
-    Vehicle(id="C", w=4, l=3, orientation="horizontal", shipping_fee=52, weight=25, eta=9),
-    Vehicle(id="D", w=3, l=3, orientation="vertical", shipping_fee=34, weight=15, eta=13),
-    Vehicle(id="E", w=5, l=2, orientation="horizontal", shipping_fee=46, weight=22, eta=8),
-    Vehicle(id="F", w=2, l=5, orientation="vertical", shipping_fee=44, weight=21, eta=12),
-    Vehicle(id="G", w=2, l=3, orientation="horizontal", shipping_fee=26, weight=13, eta=15),
-    Vehicle(id="H", w=4, l=2, orientation="vertical", shipping_fee=36, weight=18, eta=10),
-    Vehicle(id="I", w=3, l=4, orientation="horizontal", shipping_fee=48, weight=23, eta=11),
-]
-
-# matriks mash bisa overlapp kalo lebih harusnya gagal input
-# coordinat sistemnya masih array meaning x = vertikal y = horizontal
+if __name__ == "__main__":
+    armada = generate_armada()
+    for ship in armada.ship_list:
+        print(f"=== SHIP {ship.id} ===")
+        ship.display()
+    print("Total fee:", armada.calculate_armada_shipping_fee())
