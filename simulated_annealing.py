@@ -13,13 +13,16 @@ class simulated_annealing:
     def __init__(self, armada: Armada, T: float, cooling_rate: float):
         self.armada_awal = copy.deepcopy(armada)
         self.armada = copy.deepcopy(armada)
+        self.best_armada = copy.deepcopy(armada)
         self.T = T  
         self.cooling_rate = cooling_rate
+        self.best_shipping_fee = self.armada.calculate_armada_shipping_fee()
 
         self.duration = []
         self.stuck_local_frequency = 0
         self.shipping_fee_iteration = []
         self.history_acceptance_rate = []
+        self.history_shipping_fee = [self.armada.calculate_armada_shipping_fee()]
 
     def move_success(self, neighbor: Armada) -> bool:
         if neighbor is None:  
@@ -73,15 +76,16 @@ class simulated_annealing:
             if move_found: return neighbour
         return None
 
-    def execute(self):
+    def execute(self, on_iteration = None):
         start_time = time.time()
         iteration = 0
         max_iteration = 100
         initial_shipping_fee = self.armada.calculate_armada_shipping_fee()
+        
 
-        for ship in self.armada.ship_list:
-            ship.display()
-        print(f"shipping fee of the armada: {self.armada.calculate_armada_shipping_fee()}")
+        step = 0
+        if on_iteration:
+            on_iteration(0, initial_shipping_fee, self.armada, f"T={self.T:.2f}")
         
        
         while iteration <= max_iteration and self.T > 0.1:
@@ -89,22 +93,23 @@ class simulated_annealing:
             neighbour = self.find_random_neighbour()
             if self.move_success(neighbour):
                 iteration = 0
-                for ship in self.armada.ship_list:
-                    ship.display()
-                    print(ship.calculate_shipping_fee())
-                self.shipping_fee_iteration.append(self.armada.calculate_armada_shipping_fee())
+                step += 1
+                fee = self.armada.calculate_armada_shipping_fee()
+                self.shipping_fee_iteration.append(fee)
+                self.history_shipping_fee.append(fee)
+                if fee > self.best_shipping_fee:
+                    self.best_armada, self.best_shipping_fee = self.armada, fee
+
+                if on_iteration:
+                    on_iteration(step, fee, self.armada, f"T={self.T:.2f}")
+
         
   
-        gain = self.armada.calculate_armada_shipping_fee() - initial_shipping_fee
+        gain = self.best_shipping_fee - initial_shipping_fee
         simulated_annealing.all_shipping_fee_gain.append(gain)
         simulated_annealing.all_stuck_local_frequency.append(self.stuck_local_frequency)
-        
-        stop_time = time.time()
-        duration = stop_time - start_time
-        simulated_annealing.all_duration.append(duration)
-        self.duration = duration
+        self.duration = time.time() - start_time
+        simulated_annealing.all_duration.append(self.duration)
+        return self.best_armada, self.best_shipping_fee, self.history_shipping_fee
 
-        for ship in self.armada.ship_list:
-            ship.display()
-        print(f"shipping fee of the armada: {self.armada.calculate_armada_shipping_fee()}")
 

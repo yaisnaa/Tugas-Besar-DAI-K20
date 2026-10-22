@@ -6,17 +6,23 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 
 from hillClimbing import hill_climbing, random_restart
+from simulated_annealing import simulated_annealing
 from starter import generate_armada
+
 
 CELL = 20
 MAX_DELAY_MS = 1000
 
-FIELDS = [
+HC_FIELDS = [
     ("n_vehicles", "Kendaraan", "30"),
     ("n_ships", "Kapal", "2"),
     ("sideways", "Maks sideways", "0"),
     ("neighbors", "Neighbor/iterasi", "50"),
     ("restarts", "Restart (0 = tanpa)", "0"),
+]
+SA_FIELDS = [
+    ("temp", "Suhu awal (T)", "100"),
+    ("cooling", "Cooling rate", "0.99"),
 ]
 
 
@@ -28,21 +34,32 @@ class App(tk.Tk):
         self.running = False
         self.q = queue.Queue()
         self.vars = {}
+        self.algo = tk.StringVar(value="hill")
         self.canvases, self.infos, self.colors = {}, {}, {}
         self.delay_ms = 0       # dibaca thread algoritma, jadi bukan tk.Variable
         self.prev_fee = 0
 
         form = ttk.Frame(self, padding=8)
         form.pack(fill="x")
-        for i, (key, label, default) in enumerate(FIELDS):
+        for i, (key, label, default) in enumerate(HC_FIELDS):
             ttk.Label(form, text=label).grid(row=0, column=2 * i)
             self.vars[key] = tk.StringVar(value=default)
             ttk.Entry(form, width=6, textvariable=self.vars[key]).grid(row=0, column=2 * i + 1, padx=(2, 10))
+        algo_row = ttk.Frame(self, padding=(8, 0, 8, 6))
+        algo_row.pack(fill="x")
+        ttk.Label(algo_row, text="Algoritma").pack(side="left")
+        for value, text in (("hill", "Hill Climbing"), ("sa", "Simulated Annealing")):
+            ttk.Radiobutton(algo_row, text=text, value=value, variable=self.algo).pack(side="left", padx=(8, 0))
+        for key, label, default in SA_FIELDS:
+            ttk.Label(algo_row, text=label).pack(side="left", padx=(16, 2))
+            self.vars[key] = tk.StringVar(value=default)
+            ttk.Entry(algo_row, width=6, textvariable=self.vars[key]).pack(side="left")
 
         buttons = ttk.Frame(self, padding=(8, 0))
         buttons.pack(fill="x")
         ttk.Button(buttons, text="Generate", command=self.generate).pack(side="left")
-        self.run_btn = ttk.Button(buttons, text="Jalankan Hill Climbing", command=self.run, state="disabled")
+        #self.run_btn = ttk.Button(buttons, text="Jalankan Hill Climbing", command=self.run, state="disabled")
+        self.run_btn = ttk.Button(buttons, text="Jalankan", command=self.run, state="disabled")
         self.run_btn.pack(side="left", padx=8)
 
         ttk.Label(buttons, text="Jeda/iterasi").pack(side="left", padx=(12, 4))
@@ -63,6 +80,9 @@ class App(tk.Tk):
     # ---- util
     def _int(self, key):
         return int(self.vars[key].get())
+    def _float(self, key):
+        return float(self.vars[key].get().replace(",", "."))
+
 
     def _on_delay(self, value):
         self.delay_ms = int(float(value))
@@ -92,32 +112,45 @@ class App(tk.Tk):
     def run(self):
         if self.armada is None or self.running:
             return
+        algo = self.algo.get()
         try:
-            sideways, neighbors, restarts = self._int("sideways"), self._int("neighbors"), self._int("restarts")
+            if algo == "sa":
+                T, cooling = self._float("temp"), self._float("cooling")
+                if T <= 0.1 or not 0 < cooling < 1:
+                    raise ValueError
+                params = (T, cooling)
+            else:
+                params = (self._int("sideways"), self._int("neighbors"), self._int("restarts"))
         except ValueError:
-            messagebox.showerror("Input tidak valid", "Parameter harus bilangan bulat.")
+            messagebox.showerror("Input tidak valid",
+                                 "Hill Climbing: parameter harus bilangan bulat.\n"
+                                 "Simulated Annealing: T > 0.1 dan 0 < cooling rate < 1.")
             return
         self.running = True
         self.run_btn.config(state="disabled")
         self.t0 = time.perf_counter()
         self.slept = 0.0
 
-        threading.Thread(target=self._worker, args=(sideways, neighbors, restarts), daemon=True).start()
+        threading.Thread(target=self._worker, args=(algo, params), daemon=True).start()
         self.after(30, self._poll)
 
-    def _worker(self, sideways, neighbors, restarts):
-        def progress(it, fee, armada):
-            self.q.put(("progress", it, fee, armada))
+    def _worker(self, algo, params):
+        def progress(it, fee, armada, extra=""):
+            self.q.put(("progress", it, fee, armada, extra))
             if self.delay_ms:
                 time.sleep(self.delay_ms / 1000)
                 self.slept += self.delay_ms / 1000
 
-
         try:
-            if restarts > 0:
-                result = random_restart(self.armada, sideways, neighbors, restarts, progress)
+            if algo == "sa":
+                T, cooling = params
+                result = simulated_annealing(self.armada, T, cooling).execute(progress)
             else:
-                result = hill_climbing(self.armada, sideways, neighbors, progress)
+                sideways, neighbors, restarts = params
+                if restarts > 0:
+                    result = random_restart(self.armada, sideways, neighbors, restarts, progress)
+                else:
+                    result = hill_climbing(self.armada, sideways, neighbors, progress)
             self.q.put(("done", result))
         except Exception as e:
             self.q.put(("error", repr(e)))
@@ -130,9 +163,9 @@ class App(tk.Tk):
             except queue.Empty:
                 break
             if kind == "progress":
-                it, fee, armada = data
-                self._log_iteration(it, fee)
-                last = (it, fee, armada)
+                it, fee, armada, extra = data
+                self._log_iteration(it, fee, extra)
+                last = (it, fee, armada, extra)
             elif kind == "error":
                 messagebox.showerror("Error", data[0])
                 self._finish()
@@ -150,17 +183,20 @@ class App(tk.Tk):
             
 
         if last:  # delay kecil bikin banyak iterasi menumpuk; gambar yang terbaru saja
-            it, fee, armada = last
-            self.status.set(f"Iterasi {it} | fee {fee} | {time.perf_counter() - self.t0 - self.slept:.1f} s")
+            it, fee, armada, extra = last
+            self.status.set(f"Iterasi {it} | fee {fee} {extra} | {time.perf_counter() - self.t0 - self.slept:.1f} s")
             self.render(armada)
         self.after(30, self._poll)
 
-    def _log_iteration(self, it, fee):
+
+
+    def _log_iteration(self, it, fee, extra=""):
         if it == 0:
-            self.write(f"--- mulai dari fee {fee}")
+            self.write(f"--- mulai dari fee {fee} {extra}".rstrip())
         else:
-            self.write(f"Iterasi {it}: fee {fee} ({fee - self.prev_fee:+d})")
+            self.write(f"Iterasi {it}: fee {fee} ({fee - self.prev_fee:+d}) {extra}".rstrip())
         self.prev_fee = fee
+
 
     def _finish(self):
         self.running = False
