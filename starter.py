@@ -14,7 +14,7 @@ class Vehicle:
             self.coor = [-1, -1]
         else:
             self.coor = [coor[0], coor[1]]
-    
+
     def __str__(self) -> str:
         return f"{self.id}"
 
@@ -130,9 +130,9 @@ class Ship:
         original_orientation = vehicle.orientation
         x_coor = vehicle.coor[0]
         y_coor = vehicle.coor[1]
+        self.remove_vehicle_success(vehicle)
         vehicle.orientation = "vertical" if vehicle.orientation == "horizontal" else "horizontal"
 
-        self.remove_vehicle_success(vehicle)
         if self.inputing_vehicle_success(vehicle, x_coor, y_coor):
             return True
         
@@ -157,7 +157,7 @@ class Ship:
         self.inputing_vehicle_success(vehicle, old_x, old_y)
         return False
 
-    def switch_vehicles_success(self, vehicle_a: Vehicle, vehicle_b: Vehicle) -> bool:
+    def switch_vehicles_success(self, vehicle_a: Vehicle, vehicle_b: Vehicle) -> bool: 
         in_a = vehicle_a in self.list_vehicles_in_ship
         in_b = vehicle_b in self.list_vehicles_in_ship
         
@@ -245,10 +245,6 @@ class Armada:
         ok_a = (ship_b is None) or ship_b.inputing_vehicle_success(vehicle_a, *coor_b)
         ok_b = ok_a and ((ship_a is None) or ship_a.inputing_vehicle_success(vehicle_b, *coor_a))
         if ok_a and ok_b:
-            origin_a = f"ship {ship_a.id}" if ship_a else "luar"
-            origin_b = f"ship {ship_b.id}" if ship_b else "luar"
-            print(f"kendaraan 1: {vehicle_a} dari: {origin_a}")
-            print(f"kendaraan 2: {vehicle_b} dari: {origin_b}")
             return True
 
         # gagal -> rollback
@@ -261,6 +257,22 @@ class Armada:
         if ship_b:
             ship_b.inputing_vehicle_success(vehicle_b, *coor_b)
         return False
+
+def generate_armada(n_vehicles=30, n_ships=2,
+                    ship_w=(8, 12), ship_l=(15, 25), capacity=(150, 250),
+                    vehicle_w=(2, 5), vehicle_l=(2, 5),
+                    fee=(5, 60), weight=(8, 26), eta=(7, 15)) -> Armada:
+    ships = [Ship(w=random.randint(*ship_w), l=random.randint(*ship_l),
+                  max_capacity=random.randint(*capacity), id=f"S{i}")
+             for i in range(1, n_ships + 1)]
+    vehicles = [Vehicle(id=f"V{i}", w=random.randint(*vehicle_w), l=random.randint(*vehicle_l),
+                        shipping_fee=random.randint(*fee), weight=random.randint(*weight),
+                        eta=random.randint(*eta),
+                        orientation=random.choice(["vertical", "horizontal"]))
+                for i in range(1, n_vehicles + 1)]
+    armada = Armada(set(ships), vehicles)
+    armada.random_state_armada(vehicles)
+    return armada
 
 
 ship1 = Ship(w=10, l=20, max_capacity=200, id="f")
@@ -306,4 +318,3 @@ list_vehicles = [
 
 # matriks mash bisa overlapp kalo lebih harusnya gagal input
 # coordinat sistemnya masih array meaning x = vertikal y = horizontal
-
