@@ -130,9 +130,11 @@ class Ship:
         original_orientation = vehicle.orientation
         x_coor = vehicle.coor[0]
         y_coor = vehicle.coor[1]
-        vehicle.orientation = "vertical" if vehicle.orientation == "horizontal" else "horizontal"
 
         self.remove_vehicle_success(vehicle)
+
+        vehicle.orientation = "vertical" if original_orientation == "horizontal" else "horizontal"
+
         if self.inputing_vehicle_success(vehicle, x_coor, y_coor):
             return True
         
@@ -311,31 +313,31 @@ unplaced_after_ship2 = ship2.random_state_ship(unplaced_after_ship1)
 
 ship_list = {ship1, ship2}
 
-print("=== SHIP 1 ===")
-ship1.display()
-print("Shipping Fee:", ship1.calculate_shipping_fee())
-print("Ship Weight:", ship1.calculate_ship_weight())
+# print("=== SHIP 1 ===")
+# ship1.display()
+# print("Shipping Fee:", ship1.calculate_shipping_fee())
+# print("Ship Weight:", ship1.calculate_ship_weight())
 
-print("\n=== SHIP 2 ===")
-ship2.display()
-print("Shipping Fee:", ship2.calculate_shipping_fee())
-print("Ship Weight:", ship2.calculate_ship_weight())
+# print("\n=== SHIP 2 ===")
+# ship2.display()
+# print("Shipping Fee:", ship2.calculate_shipping_fee())
+# print("Ship Weight:", ship2.calculate_ship_weight())
 
-print("\nUnplaced Vehicles:", unplaced_after_ship2)
+# print("\nUnplaced Vehicles:", unplaced_after_ship2)
 
 armada1 = Armada(ship_list, all_vehicles)
-print("\nTotal Armada Shipping Fee:", armada1.calculate_armada_shipping_fee())
+# print("\nTotal Armada Shipping Fee:", armada1.calculate_armada_shipping_fee())
 
-print("\nMencoba swap kendaraan di armada...")
-for i in range(100):
-    if armada1.switch_vehicle_success():
-        break
+# print("\nMencoba swap kendaraan di armada...")
+# for i in range(100):
+#     if armada1.switch_vehicle_success():
+#         break
 
-print("\nSetelah Swap:")
-print("=== SHIP 1 ===")
-ship1.display()
-print("\n=== SHIP 2 ===")
-ship2.display()
+# print("\nSetelah Swap:")
+# print("=== SHIP 1 ===")
+# ship1.display()
+# print("\n=== SHIP 2 ===")
+# ship2.display()
 
 # matriks mash bisa overlapp kalo lebih harusnya gagal input
 # coordinat sistemnya masih array meaning x = vertikal y = horizontal
