@@ -405,14 +405,3 @@ def run_genetic_algorithm(vehicles, ship_w, ship_l, max_capacity, pop_size=50, g
         "generations": generations
     }
 
-
-if __name__ == "__main__":
-    print("Pengujian Algoritma Genetik (Single Run)")
-    hasil = run_genetic_algorithm(list_vehicles, ship_w=10, ship_l=20, max_capacity=200, pop_size=40, generations=30)
-    
-    print(f"Durasi Pencarian: {hasil['duration']:.2f} detik")
-    print(f"Fitness Awal    : {hasil['initial_state'].fitness}")
-    print(f"Fitness Akhir   : {hasil['best_fitness']}")
-    
-    print("\nPenataan Geladak Final:")
-    hasil["final_state"].display()

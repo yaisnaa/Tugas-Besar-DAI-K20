@@ -304,38 +304,6 @@ list_vehicles = [
     Vehicle(id="I", w=3, l=4, orientation="horizontal", shipping_fee=48, weight=23, eta=11),
 ]
 
-if __name__ == "__main__":
-    all_vehicles = list(list_vehicles)
-    unplaced_after_ship1 = ship1.random_state_ship(all_vehicles)
-    unplaced_after_ship2 = ship2.random_state_ship(unplaced_after_ship1)
-
-    ship_list = {ship1, ship2}
-
-    print("=== SHIP 1 ===")
-    ship1.display()
-    print("Shipping Fee:", ship1.calculate_shipping_fee())
-    print("Ship Weight:", ship1.calculate_ship_weight())
-
-    print("\n=== SHIP 2 ===")
-    ship2.display()
-    print("Shipping Fee:", ship2.calculate_shipping_fee())
-    print("Ship Weight:", ship2.calculate_ship_weight())
-
-    print("\nUnplaced Vehicles:", unplaced_after_ship2)
-
-    armada1 = Armada(ship_list, all_vehicles)
-    print("\nTotal Armada Shipping Fee:", armada1.calculate_armada_shipping_fee())
-
-    print("\nMencoba swap kendaraan di armada...")
-    for i in range(100):
-        if armada1.switch_vehicle_success():
-            break
-
-    print("\nSetelah Swap:")
-    print("=== SHIP 1 ===")
-    ship1.display()
-    print("\n=== SHIP 2 ===")
-    ship2.display()
-
 # matriks mash bisa overlapp kalo lebih harusnya gagal input
 # coordinat sistemnya masih array meaning x = vertikal y = horizontal
+
